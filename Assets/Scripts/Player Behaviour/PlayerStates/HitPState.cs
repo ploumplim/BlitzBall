@@ -1,6 +1,6 @@
 using UnityEngine;
-
-public class HitPState : MonoBehaviour
+[CreateAssetMenu(fileName = "HitPState", menuName = "Player/States/HitPState")]
+public class HitPState : PlayerState
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
