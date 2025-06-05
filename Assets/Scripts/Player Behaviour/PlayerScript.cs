@@ -20,6 +20,15 @@ public class PlayerScript : MonoBehaviour
     
     [Header("Aim Settings")]
     public AimMode aimMode = AimMode.ForwardDirection; // Default to forward direction aiming
+
+    [Header("Hit Settings")]
+    public float hitForce = 10f; // Force applied to the ball when hit
+    public float hitDuration = 0.2f;
+    public float hitCooldown = 0.5f; // Cooldown time for hit action
+    public float hitRadius = 1.0f; // Radius for hit detection
+    public float hitMinAngle = 0f; // Minimum angle for hit detection
+    public float hitMaxAngle = 360f; // Maximum angle for hit detection
+    
     
     //Hidden public variables
     [HideInInspector] public Vector2 moveVec2;
@@ -35,6 +44,9 @@ public class PlayerScript : MonoBehaviour
     private InputAction hitInput;
     private InputAction specialInput;
     private InputAction sprintInput;
+    
+    private InputAction bufferedInput;
+    
     // Method Variables
     private Collider[] inConeColliders;
 
@@ -55,7 +67,6 @@ public class PlayerScript : MonoBehaviour
     private void Update()
     {
         moveVec2 = moveInput.ReadValue<Vector2>();
-        aimVec2 = aimInput.ReadValue<Vector2>();
     }
 
     public void Move(float speed)
@@ -69,8 +80,12 @@ public class PlayerScript : MonoBehaviour
         switch (aimMode)
         {
             case AimMode.ForwardDirection:
+                // Turn the player to face towards their front.
+                aimVec2 = moveVec2;
                 break;
             case AimMode.RightStickDirection:
+                // Use the right stick direction for aiming
+                aimVec2 = aimInput.ReadValue<Vector2>();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -88,9 +103,21 @@ public class PlayerScript : MonoBehaviour
 
     public void OnHit(InputAction.CallbackContext context)
     {
-        
+        if (context.started)
+        {
+            switch (playerSM.currentState)
+            {
+                case NeutralPState: // Neutral State
+                    playerSM.ChangeState(playerSM.states[1]); // Change to Hit State
+                    break;
+                default:
+                    // buffer the input
+                    bufferedInput = hitInput;
+                    break;
+            }
+            
+        }
     }
-
     public void OnSprint(InputAction.CallbackContext context)
     {
         
@@ -107,20 +134,15 @@ public class PlayerScript : MonoBehaviour
             Debug.LogWarning("Min angle is out of range.");
             return null;
         }
-
-        Physics.OverlapSphereNonAlloc(transform.position, detectionRadius, inConeColliders);
-        foreach (var hitCollider in inConeColliders)
+        inConeColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+        
+        foreach (Collider hitCollider in inConeColliders)
         {
-            if (!hitCollider.CompareTag("Ball"))
-            {
-                continue;
-            }
-            else
+            if (hitCollider.gameObject.CompareTag("Ball"))
             {
                 return hitCollider.gameObject;
             }
         }
-
         return null;
     }
     
@@ -129,5 +151,7 @@ public class PlayerScript : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, transform.forward * 5f);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, hitRadius);
     }
 }

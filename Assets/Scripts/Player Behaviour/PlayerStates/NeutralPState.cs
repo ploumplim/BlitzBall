@@ -12,5 +12,6 @@ public class NeutralPState : PlayerState
     {
         base.FixedTick();
         PlayerScript.Move(PlayerScript.baseSpeed);
+        PlayerScript.Aim(PlayerScript.baseRotationSpeed);
     }
 }

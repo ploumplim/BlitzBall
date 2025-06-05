@@ -157,7 +157,7 @@ Rigidbody:
   m_GameObject: {fileID: 7898578888370541438}
   serializedVersion: 4
   m_Mass: 5
-  m_Drag: 50
+  m_Drag: 15
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -276,6 +276,12 @@ MonoBehaviour:
   baseSpeed: 5
   acceleration: 20
   baseRotationSpeed: 2
+  aimMode: 0
+  hitDuration: 0.2
+  hitCooldown: 0.5
+  hitRadius: 1
+  hitMinAngle: 0
+  hitMaxAngle: 360
   moveVec2: {x: 0, y: 0}
   aimVec2: {x: 0, y: 0}
 --- !u!114 &2418577391678432312
