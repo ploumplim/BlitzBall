@@ -17,7 +17,6 @@ public class PlayerScript : MonoBehaviour
     // References
     private PlayerSM playerSM;
     private PlayerInput playerInput;
-
     private Rigidbody rb;
     // Inputs
     private InputAction aimInput;
@@ -25,6 +24,8 @@ public class PlayerScript : MonoBehaviour
     private InputAction hitInput;
     private InputAction specialInput;
     private InputAction sprintInput;
+    // Method Variables
+    private Collider[] inConeColliders;
 
     private void Start()
     {
@@ -63,16 +64,22 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void ConeHitBox(float minAngle, float maxAngle)
+    public void ConeHitBox(float minAngle, float maxAngle, float detectionRadius)
     {
         if (minAngle < 0 || maxAngle > 360 || minAngle >= maxAngle)
         {
             Debug.LogWarning("Min angle is out of range.");
             return;
         }
-        
-        //
-        
-        
+
+        Physics.OverlapSphereNonAlloc(transform.position, detectionRadius, inConeColliders);
+        foreach (var hitCollider in inConeColliders)
+        {
+            if (!hitCollider.CompareTag("Ball"))
+            {
+                continue;
+            }
+        }
+
     }
 }
