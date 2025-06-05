@@ -76,6 +76,17 @@
                 },
                 {
                     "name": "",
+                    "id": "231ff4cd-3725-4fcc-ad49-6942f1b13498",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7ae56118-d7e4-4521-8ee7-94e81c4e2e03",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -92,6 +103,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
+                    "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b3862574-72c8-4b07-8c1d-543e754bee66",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Special",
                     "isComposite": false,
                     "isPartOfComposite": false

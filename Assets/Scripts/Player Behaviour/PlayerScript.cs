@@ -4,11 +4,22 @@ using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
+    // Aim Modes
+    public enum AimMode
+    {
+        ForwardDirection, // Aim in the forward direction of the player
+        RightStickDirection // Aim in the direction of the right stick
+    }
+    
+    
     //Editor variables
     [Header("Movement Settings")] 
     public float baseSpeed;
     public float acceleration;
     public float baseRotationSpeed;
+    
+    [Header("Aim Settings")]
+    public AimMode aimMode = AimMode.ForwardDirection; // Default to forward direction aiming
     
     //Hidden public variables
     [HideInInspector] public Vector2 moveVec2;
@@ -55,6 +66,15 @@ public class PlayerScript : MonoBehaviour
 
     public void Aim(float rotationSpeed)
     {
+        switch (aimMode)
+        {
+            case AimMode.ForwardDirection:
+                break;
+            case AimMode.RightStickDirection:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
         // Make the game object's forward position be equal to the aim vector
         if (aimVec2.sqrMagnitude > 0.01f)
         {
@@ -64,12 +84,28 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void ConeHitBox(float minAngle, float maxAngle, float detectionRadius)
+    // Input Methods
+
+    public void OnHit(InputAction.CallbackContext context)
+    {
+        
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        
+    }
+    
+    
+    
+    
+    // This method checks for a ball within a cone defined by minAngle and maxAngle, and returns the first ball found within that cone.
+    public GameObject BallInConeHitBox(float minAngle, float maxAngle, float detectionRadius)
     {
         if (minAngle < 0 || maxAngle > 360 || minAngle >= maxAngle)
         {
             Debug.LogWarning("Min angle is out of range.");
-            return;
+            return null;
         }
 
         Physics.OverlapSphereNonAlloc(transform.position, detectionRadius, inConeColliders);
@@ -79,7 +115,19 @@ public class PlayerScript : MonoBehaviour
             {
                 continue;
             }
+            else
+            {
+                return hitCollider.gameObject;
+            }
         }
 
+        return null;
+    }
+    
+    //Draw gizmo of the forward direction
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.forward * 5f);
     }
 }

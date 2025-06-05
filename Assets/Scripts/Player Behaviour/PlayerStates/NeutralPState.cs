@@ -7,10 +7,10 @@ public class NeutralPState : PlayerState
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public override void FixedTick()
     {
-        
+        base.FixedTick();
+        PlayerScript.Move(PlayerScript.baseSpeed);
     }
 }
