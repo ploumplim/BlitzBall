@@ -122,8 +122,15 @@ public class PlayerScript : MonoBehaviour
     {
         
     }
-    
-    
+
+    public void OnReset(InputAction.CallbackContext context)
+    {
+        // Reset the current scene
+        if (context.started)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
+    }
     
     
     // This method checks for a ball within a cone defined by minAngle and maxAngle, and returns the first ball found within that cone.
