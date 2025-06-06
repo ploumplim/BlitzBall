@@ -1,16 +1,42 @@
+using System;
 using UnityEngine;
 
 public class BallScript : MonoBehaviour
 {
+    // Editor Variables
     [Header("Ball Settings")]
     public float maximumLinearVelocity = 100f;
-    [HideInInspector] public Vector3 currentVelocityVec3;
-    private float currentVelocity;
-    [HideInInspector]public Rigidbody rb;
+    public float firstHitSpeed = 10f; // Speed of the ball on the first hit
     
-    public void PreventSpeedDrop()
+    [Header("State settings")]
+    public float hitDuration = 0.2f; // Duration of the hit state
+    
+    // Method Variables
+    [HideInInspector] public Vector3 currentVelocityVec3;
+    private float velocityFloor;
+    [HideInInspector]public Rigidbody rb;
+
+    private void Start()
     {
-        // Prevent the ball from dropping below a certain speed by comparing its current linearvelocity against the
-        // currentVelocity. 
+        rb = GetComponent<Rigidbody>();
+    }
+
+    public void ClampBallSpeed()
+    {
+        if (rb.linearVelocity.magnitude < firstHitSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * firstHitSpeed;
+            Debug.Log("Ball speed clamped to first hit speed: " + firstHitSpeed);
+            return;
+        }
+        
+        
+        if (rb.linearVelocity.magnitude > velocityFloor)
+        {
+            velocityFloor = rb.linearVelocity.magnitude;
+        }
+        
+        rb.linearVelocity = rb.linearVelocity.normalized * Mathf.Clamp(rb.linearVelocity.magnitude, velocityFloor, maximumLinearVelocity);
+        Debug.Log("Clamped ball speed: " + rb.linearVelocity.magnitude);
     }
 }

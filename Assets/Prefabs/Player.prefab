@@ -132,7 +132,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7898578888370541438}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 99d4bd45a8f229847911d96980d7440c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -173,7 +173,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &-1599687576314452356
 MonoBehaviour:
@@ -289,16 +289,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52dbbcf862476b479740345defce2a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 5
+  baseSpeed: 10
   acceleration: 20
-  baseRotationSpeed: 2
+  baseRotationSpeed: 10
   aimMode: 0
-  hitForce: 10
+  hitForce: 2
   hitDuration: 0.2
   hitCooldown: 0.5
-  hitRadius: 1
-  hitMinAngle: 0
-  hitMaxAngle: 360
+  hitRadius: 3.5
+  hitAngle: 360
   moveVec2: {x: 0, y: 0}
   aimVec2: {x: 0, y: 0}
 --- !u!114 &2418577391678432312

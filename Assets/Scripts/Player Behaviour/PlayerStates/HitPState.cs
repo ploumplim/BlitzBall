@@ -19,7 +19,7 @@ public class HitPState : PlayerState
         
         if (!hitBall)
         {
-            hitBall = PlayerScript.BallInConeHitBox(PlayerScript.hitMinAngle, PlayerScript.hitMaxAngle, PlayerScript.hitRadius);
+            hitBall = PlayerScript.BallInConeHitBox(PlayerScript.hitRadius, fixedAngle: PlayerScript.hitAngle);
         }
 
         if (_timer > PlayerScript.hitDuration && !hitBall)
@@ -33,13 +33,16 @@ public class HitPState : PlayerState
         base.FixedTick();
         if (hitBall)
         {
+            BallSM hitBallSM = hitBall.GetComponent<BallSM>();
             // Apply a force to the ball using the forward direction of the player
             Rigidbody ballRigidbody = hitBall.GetComponent<Rigidbody>();
             if (ballRigidbody != null)
             {
                 Vector3 forceDirection = PlayerScript.transform.forward;
-                ballRigidbody.AddForce(forceDirection * PlayerScript.hitForce, ForceMode.Impulse);
+                ballRigidbody.AddForce(forceDirection * (ballRigidbody.linearVelocity.magnitude + PlayerScript.hitForce), ForceMode.VelocityChange);
+                hitBallSM.ChangeState(hitBallSM.states[1]); // Change to HitBState after hitting
                 hitBall = null; // Reset hitBall after hitting
+                PlayerSM.ChangeState(PlayerSM.states[0]); // Change to NeutralState after hitting
             }
         }
         

@@ -983,33 +983,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5303740469012545238, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
-      propertyPath: m_Drag
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5303740469012545238, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 7198678407889935102, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 99d4bd45a8f229847911d96980d7440c, type: 2}
     - target: {fileID: 7898578888370541438, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
-      propertyPath: baseSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
-      propertyPath: hitRadius
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
-      propertyPath: baseRotationSpeed
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8859461128168675478, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_LocalPosition.x
