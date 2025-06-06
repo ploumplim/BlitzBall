@@ -985,7 +985,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7898578888370541438, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: BasePlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
+      propertyPath: hitCooldown
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8859461128168675478, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_LocalPosition.x
