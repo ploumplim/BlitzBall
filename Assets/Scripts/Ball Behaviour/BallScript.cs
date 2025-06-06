@@ -31,12 +31,21 @@ public class BallScript : MonoBehaviour
         }
         
         
-        if (rb.linearVelocity.magnitude > velocityFloor)
+        if (rb.linearVelocity.magnitude < maximumLinearVelocity && rb.linearVelocity.magnitude > velocityFloor)
         {
             velocityFloor = rb.linearVelocity.magnitude;
         }
         
+        //Set any Y component to 0
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        
+        // Clamp the linear velocity to the maximumLinearVelocity
         rb.linearVelocity = rb.linearVelocity.normalized * Mathf.Clamp(rb.linearVelocity.magnitude, velocityFloor, maximumLinearVelocity);
         Debug.Log("Clamped ball speed: " + rb.linearVelocity.magnitude);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        ClampBallSpeed();
     }
 }

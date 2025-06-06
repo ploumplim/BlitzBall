@@ -77,7 +77,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc27813eea036994fb4fe308a63ad1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumLinearVelocity: 100
+  maximumLinearVelocity: 50
+  firstHitSpeed: 10
+  hitDuration: 0.2
   currentVelocityVec3: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
 --- !u!114 &9027056731252717557

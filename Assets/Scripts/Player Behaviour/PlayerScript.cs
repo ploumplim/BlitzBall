@@ -1,6 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
@@ -53,6 +54,10 @@ public class PlayerScript : MonoBehaviour
     private bool usingConeHit; // Flag to check if the cone hit detection is being used
     private float currentAngle; // Current angle for the cone hit detection
     private float currentDetectionRadius; // Current detection radius for the cone hit detection
+    private float currentHitCooldownTimer; // Current cooldown for the hit action
+    
+    // Events
+    public UnityEvent onHitPressed;
 
     private void Start()
     {
@@ -66,11 +71,20 @@ public class PlayerScript : MonoBehaviour
         hitInput = playerInput.actions["Hit"];
         specialInput = playerInput.actions["Special"];
         sprintInput = playerInput.actions["Sprint"];
+        
+        // Timers
+        currentHitCooldownTimer = 0f;
     }
 
     private void Update()
     {
         moveVec2 = moveInput.ReadValue<Vector2>();
+        
+        // Hit timer
+        if (currentHitCooldownTimer < hitCooldown)
+        {
+            currentHitCooldownTimer += Time.deltaTime;
+        }
     }
 
     public void Move(float speed)
@@ -107,8 +121,10 @@ public class PlayerScript : MonoBehaviour
 
     public void OnHit(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && currentHitCooldownTimer >= hitCooldown)
         {
+            currentHitCooldownTimer = 0f; // Reset the hit cooldown timer
+            
             switch (playerSM.currentState)
             {
                 case NeutralPState: // Neutral State

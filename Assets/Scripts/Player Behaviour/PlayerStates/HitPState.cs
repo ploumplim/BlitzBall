@@ -8,6 +8,8 @@ public class HitPState : PlayerState
 
     public override void Enter()
     {
+        base.Enter();
+        PlayerScript.onHitPressed?.Invoke();
         _timer = 0;
     }
 
@@ -39,7 +41,9 @@ public class HitPState : PlayerState
             if (ballRigidbody != null)
             {
                 Vector3 forceDirection = PlayerScript.transform.forward;
-                ballRigidbody.AddForce(forceDirection * (ballRigidbody.linearVelocity.magnitude + PlayerScript.hitForce), ForceMode.VelocityChange);
+                ballRigidbody.linearVelocity =
+                    forceDirection * (ballRigidbody.linearVelocity.magnitude + PlayerScript.hitForce);
+                
                 hitBallSM.ChangeState(hitBallSM.states[1]); // Change to HitBState after hitting
                 hitBall = null; // Reset hitBall after hitting
                 PlayerSM.ChangeState(PlayerSM.states[0]); // Change to NeutralState after hitting
