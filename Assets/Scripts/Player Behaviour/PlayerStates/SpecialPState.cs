@@ -2,15 +2,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SpecialPState", menuName = "Player/States/SpecialPState")]
 public class SpecialPState : PlayerState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // Replace this scriptable object in the list with your special state logic. Special states can be used for various player abilities or actions.
+    // Always make sure that the special state is on the third index of the PlayerSM.states list.
+    
+    
 }

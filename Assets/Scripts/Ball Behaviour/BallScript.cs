@@ -1,0 +1,49 @@
+using System;
+using UnityEngine;
+
+public class BallScript : MonoBehaviour
+{
+    // Editor Variables
+    [Header("Ball Settings")]
+    public float maximumLinearVelocity = 100f;
+    public float firstHitSpeed = 10f; // Speed of the ball on the first hit
+    
+    [Header("State settings")]
+    public float hitDuration = 0.2f; // Duration of the hit state
+    
+    // Method Variables
+    [HideInInspector] public Vector3 currentVelocityVec3;
+    private float velocityFloor;
+    [HideInInspector]public Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    public void ClampBallSpeed(Collision hitCollider = null)
+    {
+        float magnitude = rb.linearVelocity.magnitude;
+        // Clamp to first hit speed if below threshold or hit by player
+        if (magnitude < firstHitSpeed || (hitCollider?.gameObject.CompareTag("Player") ?? false))
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * firstHitSpeed;
+            // Debug.Log("Ball speed clamped to first hit speed: " + firstHitSpeed);
+            return;
+        }
+        // Update velocity floor if within range
+        if (magnitude > velocityFloor && magnitude < maximumLinearVelocity)
+        {
+            velocityFloor = magnitude;
+        }
+        // Remove Y component and clamp velocity
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).normalized 
+                            * Mathf.Clamp(magnitude, velocityFloor, maximumLinearVelocity);
+        // Debug.Log("Clamped ball speed: " + rb.linearVelocity.magnitude);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        ClampBallSpeed(other);
+    }
+}
