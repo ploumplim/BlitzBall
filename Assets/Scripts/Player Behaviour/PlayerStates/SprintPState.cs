@@ -4,14 +4,14 @@ public class SprintPState : PlayerState
 {
     private float _timer;
     private float _currentSprintSpeed;
-    [HideInInspector] public float currentSprintBoost;
 
     public override void Enter()
     {
         base.Enter();
         _timer = 0f;
-        _currentSprintSpeed = PlayerScript.sprintSpeed + currentSprintBoost;
-        currentSprintBoost = 0f;
+        PlayerScript.onSprintStarted?.Invoke();
+        _currentSprintSpeed = PlayerScript.sprintSpeed + PlayerScript.currentSprintBoost;
+        PlayerScript.currentSprintBoost = 0f;
     }
 
     public override void UpdateTick()
@@ -32,9 +32,23 @@ public class SprintPState : PlayerState
         
         _currentSprintSpeed = Mathf.Lerp(_currentSprintSpeed, PlayerScript.sprintSpeed, curveVal);
         
-        if (PlayerScript.moveVec2 == Vector2.zero)
+        if (PlayerScript.moveVec2 == Vector2.zero )
         {
             PlayerSM.ChangeState(PlayerSM.states[0]); // Change to NeutralState if no movement input
         }
+    }
+
+    public override void FixedTick()
+    {
+        base.FixedTick();
+        PlayerScript.Move(_currentSprintSpeed);
+        PlayerScript.Aim(PlayerScript.baseRotationSpeed);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        PlayerScript.onSprintEnded?.Invoke();
+        _timer = 0f;
     }
 }

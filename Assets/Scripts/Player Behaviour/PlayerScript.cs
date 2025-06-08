@@ -20,7 +20,7 @@ public class PlayerScript : MonoBehaviour
     public float baseRotationSpeed;
     
     [Header("Sprint Settings")]
-    public float sprintMaxInitialSpeed = 10f; // Maximum speed when sprinting
+    public float sprintMaxBoostSpeed = 10f; // Maximum speed when sprinting
     public float sprintSpeed = 20f; // Maximum speed when sprinting after initial speed
     public float sprintBoostDecayTime = 0.5f; // Time it takes for the sprint boost to decay
     public AnimationCurve sprintCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f); // Curve for sprint speed transition
@@ -65,9 +65,12 @@ public class PlayerScript : MonoBehaviour
     private float currentHitCooldownTimer; // Current cooldown for the hit action
     private float inputBufferTimer; // Timer for input buffering
     private bool isBuffered; // Flag to check if the input is buffered
+    [HideInInspector] public float currentSprintBoost; // Current sprint boost value
     
     // Events
     public UnityEvent onHitPressed;
+    public UnityEvent onSprintStarted;
+    public UnityEvent onSprintEnded;
 
     private void Start()
     {
@@ -94,6 +97,12 @@ public class PlayerScript : MonoBehaviour
         if (currentHitCooldownTimer < hitCooldown)
         {
             currentHitCooldownTimer += Time.deltaTime;
+        }
+        
+        // Sprintboost recovery
+        if (currentSprintBoost < sprintMaxBoostSpeed)
+        {
+            currentSprintBoost += sprintBoostRecoveryRate * Time.deltaTime;
         }
 
         // Input Buffering
@@ -123,6 +132,7 @@ public class PlayerScript : MonoBehaviour
         switch (bufferedInput.name)
         {
             case "Hit":
+                Debug.Log("executing buffered hit input");
                 OnHit(new InputAction.CallbackContext());
                 break;
             case "Special":
@@ -182,11 +192,12 @@ public class PlayerScript : MonoBehaviour
     {
         if ((context.started || isBuffered) && currentHitCooldownTimer >= hitCooldown)
         {
-            isBuffered = false;
             currentHitCooldownTimer = 0f; // Reset the hit cooldown timer
             switch (playerSM.currentState)
             {
                 case NeutralPState: // Neutral State
+                case SprintPState: // Sprint State
+                    isBuffered = false;
                     playerSM.ChangeState(playerSM.states[1]); // Change to Hit State
                     break;
                 default:
@@ -200,16 +211,22 @@ public class PlayerScript : MonoBehaviour
     {
         if (context.started || isBuffered)
         {
-            isBuffered = false;
             switch (playerSM.currentState)
             {
                 case NeutralPState: // Neutral State
+                    isBuffered = false;
                     playerSM.ChangeState(playerSM.states[4]); // Change to Sprint State
                     break;
                 default:
                     bufferedInput = sprintInput; // Buffer the sprint input if in Hit State
                     break;
             }
+        }
+
+        if (context.canceled && playerSM.currentState == playerSM.states[4])
+        {
+            // If sprint is canceled, change back to Neutral State
+            playerSM.ChangeState(playerSM.states[0]);
         }
     }
 
