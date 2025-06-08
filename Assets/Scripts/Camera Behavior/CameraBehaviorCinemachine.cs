@@ -2,7 +2,7 @@ using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class CameraBehavior : MonoBehaviour
+public class CameraBehaviorCinemachine : MonoBehaviour
 {
     public CinemachineCamera vcam;
     private CinemachineComponentBase componentBase;
