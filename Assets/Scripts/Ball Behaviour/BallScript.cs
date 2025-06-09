@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BallScript : MonoBehaviour
 {
@@ -15,37 +16,50 @@ public class BallScript : MonoBehaviour
     [HideInInspector] public Vector3 currentVelocityVec3;
     private float velocityFloor;
     [HideInInspector]public Rigidbody rb;
+    
+    // Events
+    public UnityEvent OnWallCollision;
+    public UnityEvent OnPlayerCollision;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    public void ClampBallSpeed()
+    public void ClampBallSpeed(Collision hitCollider = null)
     {
-        if (rb.linearVelocity.magnitude < firstHitSpeed)
+        float magnitude = rb.linearVelocity.magnitude;
+        // Clamp to first hit speed if below threshold or hit by player
+        if (magnitude < firstHitSpeed || (hitCollider?.gameObject.CompareTag("Player") ?? false))
         {
             rb.linearVelocity = rb.linearVelocity.normalized * firstHitSpeed;
-            Debug.Log("Ball speed clamped to first hit speed: " + firstHitSpeed);
+            // Debug.Log("Ball speed clamped to first hit speed: " + firstHitSpeed);
             return;
         }
-        
-        
-        if (rb.linearVelocity.magnitude < maximumLinearVelocity && rb.linearVelocity.magnitude > velocityFloor)
+        // Update velocity floor if within range
+        if (magnitude > velocityFloor && magnitude < maximumLinearVelocity)
         {
-            velocityFloor = rb.linearVelocity.magnitude;
+            velocityFloor = magnitude;
         }
-        
-        //Set any Y component to 0
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-        
-        // Clamp the linear velocity to the maximumLinearVelocity
-        rb.linearVelocity = rb.linearVelocity.normalized * Mathf.Clamp(rb.linearVelocity.magnitude, velocityFloor, maximumLinearVelocity);
-        Debug.Log("Clamped ball speed: " + rb.linearVelocity.magnitude);
+        // Remove Y component and clamp velocity
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).normalized 
+                            * Mathf.Clamp(magnitude, velocityFloor, maximumLinearVelocity);
+        // Debug.Log("Clamped ball speed: " + rb.linearVelocity.magnitude);
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        ClampBallSpeed();
+        ClampBallSpeed(other);
+
+        switch (other.gameObject.tag)
+        {
+            case "NeutralWall":
+                OnWallCollision?.Invoke();
+                break;
+            case "Player":
+                OnPlayerCollision?.Invoke();
+                break;
+        }
+        
     }
 }

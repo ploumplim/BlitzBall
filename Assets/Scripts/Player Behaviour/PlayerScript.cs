@@ -13,12 +13,18 @@ public class PlayerScript : MonoBehaviour
         RightStickDirection // Aim in the direction of the right stick
     }
     
-    
     //Editor variables
     [Header("Movement Settings")] 
     public float baseSpeed;
     public float acceleration;
     public float baseRotationSpeed;
+    
+    [Header("Sprint Settings")]
+    public float sprintMaxBoostSpeed = 10f; // Maximum speed when sprinting
+    public float sprintSpeed = 20f; // Maximum speed when sprinting after initial speed
+    public float sprintBoostDecayTime = 0.5f; // Time it takes for the sprint boost to decay
+    public AnimationCurve sprintCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f); // Curve for sprint speed transition
+    public float sprintBoostRecoveryRate = 0.5f; // Rate at which the sprint boost recovers
     
     [Header("Aim Settings")]
     public AimMode aimMode = AimMode.ForwardDirection; // Default to forward direction aiming
@@ -30,6 +36,8 @@ public class PlayerScript : MonoBehaviour
     public float hitRadius = 1.0f; // Radius for hit detection
     public float hitAngle = 360f; // Angle for hit detection cone
     
+    [Header("Input Buffering Settings")]
+    public float inputBufferTime = 0.2f; // Time to buffer inputs
     
     //Hidden public variables
     [HideInInspector] public Vector2 moveVec2;
@@ -55,9 +63,14 @@ public class PlayerScript : MonoBehaviour
     private float currentAngle; // Current angle for the cone hit detection
     private float currentDetectionRadius; // Current detection radius for the cone hit detection
     private float currentHitCooldownTimer; // Current cooldown for the hit action
+    private float inputBufferTimer; // Timer for input buffering
+    private bool isBuffered; // Flag to check if the input is buffered
+    [HideInInspector] public float currentSprintBoost; // Current sprint boost value
     
     // Events
     public UnityEvent onHitPressed;
+    public UnityEvent onSprintStarted;
+    public UnityEvent onSprintEnded;
 
     private void Start()
     {
@@ -79,13 +92,69 @@ public class PlayerScript : MonoBehaviour
     private void Update()
     {
         moveVec2 = moveInput.ReadValue<Vector2>();
-        
+
         // Hit timer
         if (currentHitCooldownTimer < hitCooldown)
         {
             currentHitCooldownTimer += Time.deltaTime;
         }
+        
+        // Sprintboost recovery
+        if (currentSprintBoost < sprintMaxBoostSpeed)
+        {
+            currentSprintBoost += sprintBoostRecoveryRate * Time.deltaTime;
+        }
+
+        // Input Buffering
+        if (bufferedInput != null)
+        {
+            inputBufferTimer += Time.deltaTime;
+
+            // Execute buffered input if in Neutral State
+            if (playerSM.currentState == playerSM.states[0]) 
+            {
+                ExecuteBufferedInput();
+            }
+
+            // Clear buffer if timer exceeds limit
+            if (inputBufferTimer >= inputBufferTime)
+            {
+                ClearBuffer();
+            }
+        }
     }
+    
+    // Input buffering methods
+    
+    void ExecuteBufferedInput()
+    {
+        isBuffered = true;
+        switch (bufferedInput.name)
+        {
+            case "Hit":
+                Debug.Log("executing buffered hit input");
+                OnHit(new InputAction.CallbackContext());
+                break;
+            case "Special":
+                // Handle special input if needed
+                break;
+            case "Sprint":
+                OnSprint(new InputAction.CallbackContext());
+                break;
+            default:
+                Debug.LogWarning($"Buffered input not recognized: {bufferedInput.name}");
+                break;
+        }
+        ClearBuffer();
+    }
+    
+    void ClearBuffer()
+    {
+        bufferedInput = null;
+        inputBufferTimer = 0f;
+    }
+    
+    // Input methods
 
     public void Move(float speed)
     {
@@ -121,13 +190,14 @@ public class PlayerScript : MonoBehaviour
 
     public void OnHit(InputAction.CallbackContext context)
     {
-        if (context.started && currentHitCooldownTimer >= hitCooldown)
+        if ((context.started || isBuffered) && currentHitCooldownTimer >= hitCooldown)
         {
             currentHitCooldownTimer = 0f; // Reset the hit cooldown timer
-            
             switch (playerSM.currentState)
             {
                 case NeutralPState: // Neutral State
+                case SprintPState: // Sprint State
+                    isBuffered = false;
                     playerSM.ChangeState(playerSM.states[1]); // Change to Hit State
                     break;
                 default:
@@ -135,12 +205,29 @@ public class PlayerScript : MonoBehaviour
                     bufferedInput = hitInput;
                     break;
             }
-            
         }
     }
     public void OnSprint(InputAction.CallbackContext context)
     {
-        
+        if (context.started || isBuffered)
+        {
+            switch (playerSM.currentState)
+            {
+                case NeutralPState: // Neutral State
+                    isBuffered = false;
+                    playerSM.ChangeState(playerSM.states[4]); // Change to Sprint State
+                    break;
+                default:
+                    bufferedInput = sprintInput; // Buffer the sprint input if in Hit State
+                    break;
+            }
+        }
+
+        if (context.canceled && playerSM.currentState == playerSM.states[4])
+        {
+            // If sprint is canceled, change back to Neutral State
+            playerSM.ChangeState(playerSM.states[0]);
+        }
     }
 
     public void OnReset(InputAction.CallbackContext context)
