@@ -162,7 +162,6 @@ public class PlayerScript : MonoBehaviour
         switch (bufferedInput.name)
         {
             case "Hit":
-                Debug.Log("executing buffered hit input");
                 OnHit(new InputAction.CallbackContext());
                 break;
             case "Special":
@@ -239,7 +238,7 @@ public class PlayerScript : MonoBehaviour
     }
     public void OnSprint(InputAction.CallbackContext context)
     {
-        if (context.started || isBuffered)
+        if ((context.started || isBuffered)&& moveVec2 != Vector2.zero)
         {
             switch (playerSM.currentState)
             {

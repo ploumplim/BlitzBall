@@ -9,6 +9,5 @@ public class TriggerEmitter : MonoBehaviour
     {
         // Invoke the event when a collider enters the trigger
         OnTriggerEnterEvent?.Invoke(other);
-        Debug.Log("Trigger entered by: " + other.gameObject.name);
     }
 }
