@@ -56,6 +56,11 @@ namespace AmplifyShaderEditor
 		{
 			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "32120270d1b3a8746af2aca8bc749736" );
 		}
+		[MenuItem( "Assets/Create/Amplify Shader/NoeTemplate/URPImageEffect", false, 85 )]
+		public static void ApplyTemplateNoeTemplateURPImageEffect()
+		{
+			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "c136ef60ecd6a9e4e9feb8f511c03c61" );
+		}
 		[MenuItem( "Assets/Create/Amplify Shader/UI/Default", false, 85 )]
 		public static void ApplyTemplateUIDefault()
 		{
