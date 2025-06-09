@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BallScript : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class BallScript : MonoBehaviour
     [HideInInspector] public Vector3 currentVelocityVec3;
     private float velocityFloor;
     [HideInInspector]public Rigidbody rb;
+    
+    // Events
+    public UnityEvent OnWallCollision;
+    public UnityEvent OnPlayerCollision;
 
     private void Start()
     {
@@ -45,5 +50,16 @@ public class BallScript : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         ClampBallSpeed(other);
+
+        switch (other.gameObject.tag)
+        {
+            case "NeutralWall":
+                OnWallCollision?.Invoke();
+                break;
+            case "Player":
+                OnPlayerCollision?.Invoke();
+                break;
+        }
+        
     }
 }
