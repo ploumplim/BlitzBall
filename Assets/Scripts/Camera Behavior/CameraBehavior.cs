@@ -17,7 +17,7 @@ public class CameraBehavior : MonoBehaviour
     
     [Space (10)]
     [Header("Distance Settings")]
-    [SerializeField] private float _cameraDistance;
+    private float _cameraDistance;
     public float minDistance = 5f;
     public float maxDistance = 15f;
     public AnimationCurve distanceCurve;
@@ -36,9 +36,8 @@ public class CameraBehavior : MonoBehaviour
     public float rotationMultiplier;
     public float lerpRotation = 0.1f;
 
-    public bool debugSpeed = false;
-    [Range(0f, 100f)]
-    public float manualSpeed;
+    // public bool debugSpeed = false;
+    // [Range(0f, 100f)] public float manualSpeed;
     public GameObject ballRB;
     private float ballSpeed;
     private float maxBallSpeed;
@@ -60,9 +59,9 @@ public class CameraBehavior : MonoBehaviour
     {
         targetPoint = Vector3.Lerp(object1.position, object2.position, influence);
 
-        if (debugSpeed)
-            ballSpeed = manualSpeed;
-        else
+        // if (debugSpeed)
+        //     ballSpeed = manualSpeed;
+        // else
             ballSpeed = ballRB.GetComponent<Rigidbody>().linearVelocity.magnitude;
 
         float normalizedSpeed = Mathf.InverseLerp(0f, maxBallSpeed, ballSpeed);
@@ -88,7 +87,7 @@ public class CameraBehavior : MonoBehaviour
         float targetFOV = Mathf.Lerp(minFOV, maxFOV, curveValueFOV);
         mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, targetFOV, lerpFOV);
 
-        // Affichage
+        // Affichage UI
         ballSpeedText.text = $"Speed: {ballSpeed:F2}";
         distanceText.text = $"Distance: {_cameraDistance:F2}";
         fovText.text = $"FOV: {mainCamera.fieldOfView:F2}";

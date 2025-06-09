@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 82912852}
   m_Layer: 0
   m_Name: Wall (2)
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 139328822}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -821,6 +821,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1239983231244234824, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
   m_PrefabInstance: {fileID: 661711710}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &421928555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421928546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933c7768602beb54db7cb558e291e3e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minShakeIntensity: 0
+  maxShakeIntensity: 0.1
+  shakeIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minShakeDuration: 0
+  maxShakeDuration: 0.1
+  shakeDurationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  screenShake: {fileID: 1575919154}
 --- !u!1 &513020889
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,7 +1036,7 @@ GameObject:
   - component: {fileID: 567050979}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1185,6 +1250,34 @@ PrefabInstance:
       propertyPath: maximumLinearVelocity
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
+      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
+      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
+      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 421928555}
+    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
+      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
+      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TriggerShakeOnCollisison
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
+      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BallCollision, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
+      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1239983231244234824, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.57
@@ -1232,7 +1325,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2844870063500916081, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
+      insertIndex: 6
+      addedObject: {fileID: 421928555}
   m_SourcePrefab: {fileID: 100100000, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
 --- !u!1 &760776121
 GameObject:
@@ -2257,7 +2353,7 @@ GameObject:
   - component: {fileID: 1183217945}
   m_Layer: 0
   m_Name: Wall (1)
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2362,9 +2458,8 @@ GameObject:
   - component: {fileID: 1253644006}
   - component: {fileID: 1253644005}
   - component: {fileID: 1253644004}
-  - component: {fileID: 1253644003}
-  - component: {fileID: 1253644007}
   - component: {fileID: 1253644008}
+  - component: {fileID: 1253644003}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2483,83 +2578,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253644002}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6225146, y: 0, z: 0, w: 0.7826082}
-  m_LocalPosition: {x: -0, y: 24.8, z: -6.3}
+  m_LocalRotation: {x: 0.6225146, y: -0, z: -0, w: 0.7826082}
+  m_LocalPosition: {x: 0, y: 24.8, z: -6.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1575919153}
   m_LocalEulerAnglesHint: {x: 77, y: 0, z: 0}
---- !u!114 &1253644007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253644002}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bdfa5b6156c51f4f9ed1a480e72d6b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vcam: {fileID: 0}
-  _cameraDistance: 18.126757
-  minDistance: 50
-  maxDistance: 18
-  distanceCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  lerpDistance: 0.01
-  minFOV: 40
-  maxFOV: 70
-  fovCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  lerpFOV: 0.01
-  ballRB: {fileID: 421928546}
-  ballSpeedText: {fileID: 1362171210}
 --- !u!114 &1253644008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2576,7 +2601,6 @@ MonoBehaviour:
   object2: {fileID: 421928553}
   lerpPosition: 0.005
   influence: 0.1
-  _cameraDistance: 26.513758
   minDistance: 30
   maxDistance: 20
   distanceCurve:
@@ -2634,8 +2658,6 @@ MonoBehaviour:
   cameraRotation: {x: 77, y: 0, z: 0}
   rotationMultiplier: 1
   lerpRotation: 0.1
-  debugSpeed: 0
-  manualSpeed: 0
   ballRB: {fileID: 421928546}
   ballSpeedText: {fileID: 1362171210}
   fovText: {fileID: 513020891}
@@ -2762,7 +2784,7 @@ GameObject:
   - component: {fileID: 1273479917}
   m_Layer: 0
   m_Name: Wall (3)
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3222,7 +3244,7 @@ GameObject:
   - component: {fileID: 1466084090}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3403,7 +3425,7 @@ GameObject:
   - component: {fileID: 1574811700}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3506,6 +3528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1575919153}
+  - component: {fileID: 1575919154}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -3529,6 +3552,18 @@ Transform:
   - {fileID: 1253644006}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1575919154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575919152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29da1edacf556074ea7e84f4188c859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1629929437
 GameObject:
   m_ObjectHideFlags: 0
@@ -4026,7 +4061,7 @@ GameObject:
   - component: {fileID: 1781148550}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4243,7 +4278,7 @@ GameObject:
   - component: {fileID: 1948129784}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: NeutralWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
