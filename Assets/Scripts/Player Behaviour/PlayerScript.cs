@@ -36,6 +36,12 @@ public class PlayerScript : MonoBehaviour
     public float hitRadius = 1.0f; // Radius for hit detection
     public float hitAngle = 360f; // Angle for hit detection cone
     
+    [Header("Knockback Settings")]
+    public float knockbackForce = 5f; // Force applied to the player when hit by a ball
+    public float knockbackDuration = 0.5f; // Duration of the knock-back effect
+    public float knockbackMassMult = 1.0f; // Multiplier for the player's mass during knock-back
+    public float knockbackLinearDampingMult = 0.5f; // Linear damping applied to the player during knock-back
+    
     [Header("Input Buffering Settings")]
     public float inputBufferTime = 0.2f; // Time to buffer inputs
     
@@ -43,10 +49,10 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public Vector2 moveVec2;
     [HideInInspector] public Vector2 aimVec2;
     
-    // References
+    // private References
     private PlayerSM playerSM;
     private PlayerInput playerInput;
-    private Rigidbody rb;
+    [HideInInspector]public Rigidbody rb;
     
     // Inputs
     private InputAction aimInput;
@@ -66,6 +72,10 @@ public class PlayerScript : MonoBehaviour
     private float inputBufferTimer; // Timer for input buffering
     private bool isBuffered; // Flag to check if the input is buffered
     [HideInInspector] public float currentSprintBoost; // Current sprint boost value
+    private float currentPlayerMass; // Current mass of the player, used for hit calculations
+    private float currentPlayerLinearDamping; // Current linear damping of the player, used for hit calculations
+    [HideInInspector] public GameObject lastCollidedBall; // Last ball collided with, used for hit calculations
+    
     
     // Events
     public UnityEvent onHitPressed;
@@ -87,6 +97,10 @@ public class PlayerScript : MonoBehaviour
         
         // Timers
         currentHitCooldownTimer = 0f;
+        
+        // Assign Physics properties
+        currentPlayerMass = rb.mass;
+        currentPlayerLinearDamping = rb.linearDamping;
     }
 
     private void Update()
@@ -123,7 +137,23 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-    
+
+    private void OnCollisionEnter(Collision other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Ball":
+                // Handle collision with ball
+                lastCollidedBall = other.gameObject;
+                if (playerSM.currentState == playerSM.states[0]) // If in neutral state, set to knockback state.
+                {
+                    playerSM.ChangeState(playerSM.states[2]); // Change to KnockPState
+                }
+                break;
+        }
+    }
+
+
     // Input buffering methods
     
     void ExecuteBufferedInput()

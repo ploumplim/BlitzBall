@@ -10379,10 +10379,16 @@ MonoBehaviour:
   hitCooldown: 0.5
   hitRadius: 3.5
   hitAngle: 360
+  knockbackForce: 15
+  knockbackDuration: 0.5
+  knockbackMassMult: 0.5
+  knockbackLinearDampingMult: 0.2
   inputBufferTime: 0.3
   moveVec2: {x: 0, y: 0}
   aimVec2: {x: 0, y: 0}
+  rb: {fileID: 0}
   currentSprintBoost: 0
+  lastCollidedBall: {fileID: 0}
   onHitPressed:
     m_PersistentCalls:
       m_Calls:
