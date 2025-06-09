@@ -2,12 +2,29 @@ using System;
 using TMPro;
 using Unity.Collections;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+using UnityEngine.Playables;
 
 public class CameraScript : MonoBehaviour
 {
+    public PlayableDirector director;
+    
     public CameraState currentState { get; set; }
     [SerializeField, ReadOnly] private string currentStateName;
+    
+    [HideInInspector] public Camera mainCamera;
+    public GameObject ballRB;
+    public float ballSpeed;
+    public float maxBallSpeed;
+    
+    #region State 
+    
+    public EntryStageState EntryStageState;    
+    public NeutralState NeutralState;
+    public ExitStageState ExitStageState;
+   
+    #endregion
+    
+    #region StateNeutral 
     
     [Header("Objects")]
     public Transform camHolder;
@@ -19,13 +36,9 @@ public class CameraScript : MonoBehaviour
     public float influence = 0.5f;
     private Vector3 targetPoint;
     
-    public GameObject ballRB;
-    public float ballSpeed;
-    public float maxBallSpeed;
-    
     [Space (10)]
     [Header("Distance Settings")]
-    private float cameraDistance;
+    public float cameraDistance;
     public float minDistance = 5f;
     public float maxDistance = 15f;
     public AnimationCurve distanceCurve;
@@ -44,7 +57,7 @@ public class CameraScript : MonoBehaviour
     public float rotationMultiplier;
     public float lerpRotation = 0.1f;
     
-    [HideInInspector] public Camera mainCamera;
+    #endregion
     
     #region UI 
     [SerializeField] TextMeshProUGUI ballSpeedText;
@@ -52,17 +65,9 @@ public class CameraScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI distanceText;
     #endregion
 
-    #region State 
-    
-    public EntryStageState EntryStageState;    
-    public NeutralState NeutralState;
-    public ExitStageState ExitStageState;
-   
-    #endregion
-
     private void Awake()
     {
-        EntryStageState = new EntryStageState(this);
+        EntryStageState = new EntryStageState(this, director);
         NeutralState = new NeutralState(this,  camHolder,  object1,  object2,  lerpPosition,  influence, 
              cameraDistance, minDistance, maxDistance, distanceCurve, lerpDistance,
              minFOV,  maxFOV, fovCurve, lerpFOV,
@@ -89,12 +94,11 @@ public class CameraScript : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z))
+        if(Input.GetKeyDown(KeyCode.Space))
             ChangeState(NeutralState);
-        if(Input.GetKeyDown(KeyCode.A))
-            ChangeState(ExitStageState);
         
-        //-------------------------------------------------
+        if(director.state != PlayState.Playing && currentState == EntryStageState)
+            ChangeState(NeutralState);
         
         ballSpeed = ballRB.GetComponent<Rigidbody>().linearVelocity.magnitude;
         

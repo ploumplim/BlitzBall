@@ -24,9 +24,6 @@ public class NeutralState : CameraState
     private Vector3 cameraRotation;
     private float rotationMultiplier;
     private float lerpRotation = 0.1f;
-
-    // private float ballSpeed;
-    // private float maxBallSpeed;
     
     public NeutralState(CameraScript cameraScript, Transform camHolder, Transform object1, Transform object2, float lerpPosition, float influence, 
         float cameraDistance, float minDistance, float maxDistance, AnimationCurve distanceCurve, float lerpDistance,
