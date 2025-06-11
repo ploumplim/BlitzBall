@@ -21,9 +21,11 @@ public class PlayerVisuals : MonoBehaviour
         playerSM = GetComponent<PlayerSM>();
         // Hit particle init
         // Set the particle's shape emission's radius to be the same as the hit radius
-        var shape = hitParticleSystem.shape;
-        shape.radius = playerScript.hitRadius;
-        
+        var hitShape = hitParticleSystem.shape;
+        var hitMain = hitParticleSystem.main;
+        float hitStartSize = hitMain.startSize.constant;
+        float currentShapeRadius = hitShape.radius;
+        hitShape.radius = playerScript.hitRadius - Mathf.Clamp(hitStartSize / 2, 0, currentShapeRadius / 2); // Adjust radius to account for the particle's start size
         
         
         // Store the current start size of the sprint start particle system
@@ -65,7 +67,7 @@ public class PlayerVisuals : MonoBehaviour
         GameObject instance = Instantiate(hitParticleSystem.gameObject, transform.position, Quaternion.identity);
         ParticleSystem instanceParticleSystem = instance.GetComponent<ParticleSystem>();
         // Destroy the instance after the particle system has finished playing
-        Destroy(instance, instanceParticleSystem.main.duration);
+        Destroy(instance, instanceParticleSystem.main.duration * 2);
         instance.transform.SetParent(transform);
         instance.transform.rotation = Quaternion.identity;
         instanceParticleSystem.Play();

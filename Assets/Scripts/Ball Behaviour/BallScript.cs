@@ -8,6 +8,7 @@ public class BallScript : MonoBehaviour
     [Header("Ball Settings")]
     public float maximumLinearVelocity = 100f;
     public float firstHitSpeed = 10f; // Speed of the ball on the first hit
+    public float playerCollisionSpeed = 2f; // Speed of the ball when hit by a player
     
     [Header("State settings")]
     public float hitDuration = 0.2f; // Duration of the hit state
@@ -29,8 +30,23 @@ public class BallScript : MonoBehaviour
     public void ClampBallSpeed(Collision hitCollider = null)
     {
         float magnitude = rb.linearVelocity.magnitude;
+
+        if (hitCollider != null)
+        {
+            switch (hitCollider.gameObject.tag)
+            {
+                case "Player":
+                    // If player is hit, reduce disc speed.
+                    rb.linearVelocity = rb.linearVelocity.normalized * playerCollisionSpeed;                    // Debug.Log("Ball speed clamped to player collision speed: " + playerCollisionSpeed);
+                    return;
+                case "NeutralWall": 
+                    // ball does not need clamping.
+                    return;
+            }
+        }
+        
         // Clamp to first hit speed if below threshold or hit by player
-        if (magnitude < firstHitSpeed || (hitCollider?.gameObject.CompareTag("Player") ?? false))
+        if (magnitude < firstHitSpeed)
         {
             rb.linearVelocity = rb.linearVelocity.normalized * firstHitSpeed;
             // Debug.Log("Ball speed clamped to first hit speed: " + firstHitSpeed);
