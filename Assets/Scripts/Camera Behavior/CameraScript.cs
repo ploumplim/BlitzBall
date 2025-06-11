@@ -30,6 +30,7 @@ public class CameraScript : MonoBehaviour
     public Transform camHolder;
     public Transform object1;
     public Transform object2;
+    public Transform startPosition;
     public float lerpPosition;
 
     [Range(0f, 1f)]
@@ -67,8 +68,8 @@ public class CameraScript : MonoBehaviour
 
     private void Awake()
     {
-        EntryStageState = new EntryStageState(this, director);
-        NeutralState = new NeutralState(this,  camHolder,  object1,  object2,  lerpPosition,  influence, 
+        EntryStageState = new EntryStageState(this, director, cameraDistance, minFOV);
+        NeutralState = new NeutralState(this,  camHolder,  object1,  object2, startPosition, lerpPosition,  influence, 
              cameraDistance, minDistance, maxDistance, distanceCurve, lerpDistance,
              minFOV,  maxFOV, fovCurve, lerpFOV,
              cameraRotation, rotationMultiplier, lerpRotation);
@@ -94,9 +95,6 @@ public class CameraScript : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-            ChangeState(NeutralState);
-        
         if(director.state != PlayState.Playing && currentState == EntryStageState)
             ChangeState(NeutralState);
         
@@ -108,10 +106,5 @@ public class CameraScript : MonoBehaviour
         ballSpeedText.text = $"Speed: {ballSpeed:F2}";
         distanceText.text = $"Distance: {cameraDistance:F2}";
         fovText.text = $"FOV: {mainCamera.fieldOfView:F2}";
-    }
-    
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(targetPoint, 0.5f);
     }
 }

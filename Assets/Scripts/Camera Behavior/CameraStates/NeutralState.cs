@@ -5,6 +5,7 @@ public class NeutralState : CameraState
     private Transform camHolder;
     private Transform object1;
     private Transform object2;
+    private Transform startPositon;
     private float lerpPosition;
     
     private float influence;
@@ -25,7 +26,7 @@ public class NeutralState : CameraState
     private float rotationMultiplier;
     private float lerpRotation = 0.1f;
     
-    public NeutralState(CameraScript cameraScript, Transform camHolder, Transform object1, Transform object2, float lerpPosition, float influence, 
+    public NeutralState(CameraScript cameraScript, Transform camHolder, Transform object1, Transform object2, Transform startPosition, float lerpPosition, float influence, 
         float cameraDistance, float minDistance, float maxDistance, AnimationCurve distanceCurve, float lerpDistance,
         float minFOV, float maxFOV, AnimationCurve fovCurve, float lerpFOV,
         Vector3 cameraRotation, float rotationMultiplier, float lerpRotation) 
@@ -34,6 +35,7 @@ public class NeutralState : CameraState
         this.camHolder = camHolder;
         this.object1 = object1;
         this.object2 = object2;
+        this.startPositon = startPosition;
         this.lerpPosition = lerpPosition;
         this.influence = influence;
         
@@ -55,14 +57,20 @@ public class NeutralState : CameraState
 
     public override void OnEnter()
     {
-        Debug.Log("OnEnter : neutral");
+        // Distance dynamique
+        float normalizedSpeed = Mathf.InverseLerp(0f, cameraScript.maxBallSpeed, cameraScript.ballSpeed);
+        float curveValueDistance = distanceCurve.Evaluate(normalizedSpeed);
+        float targetDistance = Mathf.Lerp(minDistance, maxDistance, curveValueDistance); 
+        cameraDistance = targetDistance;
+        
+        cameraScript.transform.position = startPositon.position;
     }
     
     public override void OnUpdate()
     {
         targetPoint = Vector3.Lerp(object1.position, object2.position, influence);
-        
         float normalizedSpeed = Mathf.InverseLerp(0f, cameraScript.maxBallSpeed, cameraScript.ballSpeed);
+        
         // Distance dynamique
         float curveValueDistance = distanceCurve.Evaluate(normalizedSpeed);
         float targetDistance = Mathf.Lerp(minDistance, maxDistance, curveValueDistance);
@@ -70,8 +78,9 @@ public class NeutralState : CameraState
         
         // Suivre la target
         camHolder.position = Vector3.Lerp(camHolder.position, targetPoint, lerpPosition);
-        cameraScript.transform.position = camHolder.position + cameraScript.transform.forward * -cameraDistance;
+        cameraScript.transform.position = Vector3.Lerp(cameraScript.transform.position, camHolder.position + cameraScript.transform.forward * -cameraDistance, lerpPosition);
         
+        // Rotation de la camera
         var rotation = cameraScript.transform.rotation;
         rotation.eulerAngles = new Vector3(
             Mathf.Lerp(cameraRotation.x, cameraRotation.x + -targetPoint.z * rotationMultiplier, lerpRotation),
@@ -88,6 +97,10 @@ public class NeutralState : CameraState
     public override void OnExit()
     {
         Debug.Log("OnExit : neutral");
-
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(targetPoint, 0.5f);
     }
 }
