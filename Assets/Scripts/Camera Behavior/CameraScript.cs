@@ -3,6 +3,7 @@ using TMPro;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Serialization;
 
 public class CameraScript : MonoBehaviour
 {
@@ -28,8 +29,8 @@ public class CameraScript : MonoBehaviour
     
     [Header("Objects")]
     public Transform camHolder;
-    public Transform object1;
-    public Transform object2;
+    public Transform terrainCenter;
+    public Transform ballPosition;
     public Transform startPosition;
     public float lerpPosition;
 
@@ -69,7 +70,7 @@ public class CameraScript : MonoBehaviour
     private void Awake()
     {
         EntryStageState = new EntryStageState(this, director, cameraDistance, minFOV);
-        NeutralState = new NeutralState(this,  camHolder,  object1,  object2, startPosition, lerpPosition,  influence, 
+        NeutralState = new NeutralState(this,  camHolder,  terrainCenter,  ballPosition, startPosition, lerpPosition,  influence, 
              cameraDistance, minDistance, maxDistance, distanceCurve, lerpDistance,
              minFOV,  maxFOV, fovCurve, lerpFOV,
              cameraRotation, rotationMultiplier, lerpRotation);

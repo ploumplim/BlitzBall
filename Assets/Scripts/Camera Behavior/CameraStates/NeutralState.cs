@@ -3,8 +3,8 @@ using UnityEngine;
 public class NeutralState : CameraState
 {
     private Transform camHolder;
-    private Transform object1;
-    private Transform object2;
+    private Transform terrainCenter;
+    private Transform ballPosition;
     private Transform startPositon;
     private float lerpPosition;
     
@@ -26,15 +26,15 @@ public class NeutralState : CameraState
     private float rotationMultiplier;
     private float lerpRotation = 0.1f;
     
-    public NeutralState(CameraScript cameraScript, Transform camHolder, Transform object1, Transform object2, Transform startPosition, float lerpPosition, float influence, 
+    public NeutralState(CameraScript cameraScript, Transform camHolder, Transform terrainCenter, Transform ballPosition, Transform startPosition, float lerpPosition, float influence, 
         float cameraDistance, float minDistance, float maxDistance, AnimationCurve distanceCurve, float lerpDistance,
         float minFOV, float maxFOV, AnimationCurve fovCurve, float lerpFOV,
         Vector3 cameraRotation, float rotationMultiplier, float lerpRotation) 
         : base(cameraScript)
     {
         this.camHolder = camHolder;
-        this.object1 = object1;
-        this.object2 = object2;
+        this.terrainCenter = terrainCenter;
+        this.ballPosition = ballPosition;
         this.startPositon = startPosition;
         this.lerpPosition = lerpPosition;
         this.influence = influence;
@@ -68,7 +68,7 @@ public class NeutralState : CameraState
     
     public override void OnUpdate()
     {
-        targetPoint = Vector3.Lerp(object1.position, object2.position, influence);
+        targetPoint = Vector3.Lerp(terrainCenter.position, ballPosition.position, influence);
         float normalizedSpeed = Mathf.InverseLerp(0f, cameraScript.maxBallSpeed, cameraScript.ballSpeed);
         
         // Distance dynamique
@@ -83,8 +83,8 @@ public class NeutralState : CameraState
         // Rotation de la camera
         var rotation = cameraScript.transform.rotation;
         rotation.eulerAngles = new Vector3(
-            Mathf.Lerp(cameraRotation.x, cameraRotation.x + -targetPoint.z * rotationMultiplier, lerpRotation),
-            Mathf.Lerp(cameraRotation.y, cameraRotation.y + targetPoint.x * rotationMultiplier, lerpRotation), 
+            Mathf.Lerp(cameraRotation.x, (cameraRotation.x + (-targetPoint.z - terrainCenter.position.z)) * rotationMultiplier, lerpRotation),
+            Mathf.Lerp(cameraRotation.y, (cameraRotation.y + (targetPoint.x - terrainCenter.position.x)) * rotationMultiplier, lerpRotation), 
             cameraRotation.z);
         cameraScript.transform.rotation = rotation;
         
