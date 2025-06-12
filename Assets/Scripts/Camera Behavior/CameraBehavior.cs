@@ -13,7 +13,7 @@ public class CameraBehavior : MonoBehaviour
 
     [Range(0f, 1f)]
     public float influence = 0.5f;
-    private Vector3 targetPoint;
+    [HideInInspector] public Vector3 targetPoint;
     
     [Space (10)]
     [Header("Distance Settings")]
