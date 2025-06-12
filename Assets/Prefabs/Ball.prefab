@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 9027056731252717557}
   - component: {fileID: 3667874682290582714}
   - component: {fileID: 2889407167050212858}
-  - component: {fileID: 7803036929461256804}
+  - component: {fileID: 9040121082975267472}
+  - component: {fileID: 1054900570425296867}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -32,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0648984, y: 1.0648984, z: 1.0648984}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4718415327678143027}
@@ -77,11 +78,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc27813eea036994fb4fe308a63ad1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumLinearVelocity: 50
+  maximumLinearVelocity: 80
   firstHitSpeed: 10
+  playerCollisionSpeed: 2
   hitDuration: 0.2
   currentVelocityVec3: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
+  OnWallCollision:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9040121082975267472}
+        m_TargetAssemblyTypeName: BallCollision, Assembly-CSharp
+        m_MethodName: TriggerShakeOnCollisison
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayerCollision:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &9027056731252717557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,8 +143,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb9c9662ca4d5a4297930d4d5cc4f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &7803036929461256804
-SphereCollider:
+--- !u!114 &9040121082975267472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844870063500916081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933c7768602beb54db7cb558e291e3e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minShakeIntensity: 0
+  maxShakeIntensity: 0.1
+  shakeIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minShakeDuration: 0
+  maxShakeDuration: 0.1
+  shakeDurationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  screenShake: {fileID: 0}
+--- !u!136 &1054900570425296867
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -141,9 +226,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.85
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.75849146
+  m_Height: 5.795333
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.3976643, z: 0}
 --- !u!1 &5365292580754454126
 GameObject:
   m_ObjectHideFlags: 0
