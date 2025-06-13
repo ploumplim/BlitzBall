@@ -360,7 +360,7 @@ public class PlayerScript : MonoBehaviour
 
 
         Handles.DrawSolidArc(
-            transform.position + new Vector3(0,0.5f,hitForwardOffset),
+            transform.position + transform.forward * hitForwardOffset,
             Vector3.up, // Up direction for the arc
             Quaternion.Euler(0, -hitAngle /2, 0) * transform.forward, // Forward direction for the arc
             hitAngle, // Angle of the arc
