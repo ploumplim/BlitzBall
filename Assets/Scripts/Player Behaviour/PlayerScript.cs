@@ -37,10 +37,12 @@ public class PlayerScript : MonoBehaviour
     public float hitAngle = 360f; // Angle for hit detection cone
     
     [Header("Knockback Settings")]
-    public float knockbackForce = 5f; // Force applied to the player when hit by a ball
-    public float knockbackDuration = 0.5f; // Duration of the knock-back effect
     public float knockbackMassMult = 1.0f; // Multiplier for the player's mass during knock-back
     public float knockbackLinearDampingMult = 0.5f; // Linear damping applied to the player during knock-back
+    public float fullKnockBackForce = 20f; // Full force applied during knock-back
+    public float fullKnockBackDuration = 1.5f; // Full duration of the knock-back effect
+    public AnimationCurve knockbackDurationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f); // Curve for knock-back duration transition
+    public AnimationCurve knockbackForceCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f); // Curve for knock-back force transition
     
     [Header("Input Buffering Settings")]
     public float inputBufferTime = 0.2f; // Time to buffer inputs
@@ -73,8 +75,6 @@ public class PlayerScript : MonoBehaviour
     private float inputBufferTimer; // Timer for input buffering
     private bool isBuffered; // Flag to check if the input is buffered
     [HideInInspector] public float currentSprintBoost; // Current sprint boost value
-    private float currentPlayerMass; // Current mass of the player, used for hit calculations
-    private float currentPlayerLinearDamping; // Current linear damping of the player, used for hit calculations
     [HideInInspector] public GameObject lastCollidedBall; // Last ball collided with, used for hit calculations
     
     
@@ -104,9 +104,6 @@ public class PlayerScript : MonoBehaviour
         // Timers
         currentHitCooldownTimer = 0f;
         
-        // Assign Physics properties
-        currentPlayerMass = rb.mass;
-        currentPlayerLinearDamping = rb.linearDamping;
     }
 
     private void OnDisable()
