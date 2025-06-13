@@ -35,6 +35,7 @@ public class PlayerScript : MonoBehaviour
     public float hitCooldown = 0.5f; // Cooldown time for hit action
     public float hitRadius = 1.0f; // Radius for hit detection
     public float hitAngle = 360f; // Angle for hit detection cone
+    public float hitForwardOffset = 0.5f; // Offset for hit detection in the forward direction
     
     [Header("Knockback Settings")]
     public float knockbackMassMult = 1.0f; // Multiplier for the player's mass during knock-back
@@ -281,7 +282,7 @@ public class PlayerScript : MonoBehaviour
     
     
     // This method checks for a ball within a cone defined by minAngle and maxAngle, and returns the first ball found within that cone.
-    public GameObject BallInConeHitBox( float detectionRadius, bool isFixed = true, float minAngle = 0f, float maxAngle = 360f, float fixedAngle = 360f, AnimationCurve transitionCurve = null,
+    public GameObject BallInConeHitBox( float detectionRadius, bool isFixed = true, float forwardOffset = 0f, float minAngle = 0f, float maxAngle = 360f, float fixedAngle = 360f, AnimationCurve transitionCurve = null,
         float currentTime = 0f, float maxTime = 1f)
     {
         usingConeHit = true;
@@ -313,7 +314,7 @@ public class PlayerScript : MonoBehaviour
         currentAngle = fixedAngle; // Update the current angle to the fixed angle for the cone hit detection
         currentDetectionRadius = detectionRadius; // Update the current detection radius
         
-        inConeColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+        inConeColliders = Physics.OverlapSphere(transform.position + (transform.forward * forwardOffset), detectionRadius);
         foreach (Collider hitCollider in inConeColliders)
         {
             if (!hitCollider.gameObject.CompareTag("Ball"))
@@ -343,19 +344,20 @@ public class PlayerScript : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * 5f);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, hitRadius);
+        Gizmos.DrawRay(transform.position + new Vector3(0,2.5f,0), transform.forward * 5f);
+
         
-        // Draw the angle whenever the hitcone is being used
-        if (usingConeHit)
-        {
-            Handles.color = new Color(1,0,1,0.5f);
-            Vector3 forward = transform.forward;
-            Handles.DrawSolidArc(transform.position,
-                Vector3.up,
-                Quaternion.Euler(0, -currentAngle/2f, 0)*forward, currentAngle,
-                currentDetectionRadius);
-        }
+        // Hit Gizmo
+        
+        float fromCorrector = hitAngle / 2f; // Correct the angle to be half for the arc
+        Handles.color = new Color(1, 0, 0, 0.2f); // Purple color with transparency
+        Handles.DrawSolidArc(
+            transform.position + new Vector3(0,2.5f,hitForwardOffset),
+            Vector3.up, // Up direction for the arc
+            Quaternion.Euler(0, -hitAngle /2, 0) * Vector3.forward, // Forward direction for the arc
+            hitAngle, // Angle of the arc
+            hitRadius
+        );
+
     }
 }

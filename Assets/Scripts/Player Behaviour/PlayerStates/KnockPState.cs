@@ -21,7 +21,7 @@ public class KnockPState : PlayerState
             {
                 Vector3 knockbackDirection = (PlayerScript.transform.position - collidedBallScript.transform.position).normalized;
                 float knockbackForce = PlayerScript.knockbackForceCurve.Evaluate(collidedBallScript.rb.linearVelocity.magnitude / 
-                    collidedBallScript.maximumLinearVelocity);
+                    collidedBallScript.maximumLinearVelocity) * PlayerScript.fullKnockBackForce;
                 PlayerScript.rb.linearVelocity = knockbackDirection * knockbackForce;
             }
         }

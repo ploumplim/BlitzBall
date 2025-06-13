@@ -25,7 +25,7 @@ public class HitPState : PlayerState
         
         if (!hitBall)
         {
-            hitBall = PlayerScript.BallInConeHitBox(PlayerScript.hitRadius, fixedAngle: PlayerScript.hitAngle);
+            hitBall = PlayerScript.BallInConeHitBox(PlayerScript.hitRadius,forwardOffset: PlayerScript.hitForwardOffset, fixedAngle: PlayerScript.hitAngle);
         }
 
         if (_timer > PlayerScript.hitDuration && (!hitBall || _ballHit))

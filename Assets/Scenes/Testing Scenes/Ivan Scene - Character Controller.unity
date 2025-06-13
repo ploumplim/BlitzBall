@@ -1396,8 +1396,16 @@ PrefabInstance:
       value: BasePlayer
       objectReference: {fileID: 0}
     - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
+      propertyPath: hitAngle
+      value: 258.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: hitForce
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
+      propertyPath: hitForwardOffset
+      value: 2.52
       objectReference: {fileID: 0}
     - target: {fileID: 8859461128168675478, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_LocalPosition.x
