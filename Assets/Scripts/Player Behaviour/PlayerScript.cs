@@ -52,6 +52,7 @@ public class PlayerScript : MonoBehaviour
     // private References
     private PlayerSM playerSM;
     private PlayerInput playerInput;
+    private InputActionAsset inputActionAsset;
     [HideInInspector]public Rigidbody rb;
     
     // Inputs
@@ -82,18 +83,23 @@ public class PlayerScript : MonoBehaviour
     public UnityEvent onSprintStarted;
     public UnityEvent onSprintEnded;
 
+
+    
     private void Start()
     {
         playerSM = GetComponent<PlayerSM>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        inputActionAsset = playerInput.actions; // Get the InputActionAsset from PlayerInput
+        inputActionAsset.FindActionMap("BasicMap").Enable(); // Enable the BasicMap action map
+        
         
         // Initialize Inputs
-        aimInput = playerInput.actions["Aim"];
-        moveInput = playerInput.actions["Move"];
-        hitInput = playerInput.actions["Hit"];
-        specialInput = playerInput.actions["Special"];
-        sprintInput = playerInput.actions["Sprint"];
+        aimInput = InputSystem.actions.FindAction("Aim");
+        moveInput = InputSystem.actions.FindAction("Move");
+        hitInput = InputSystem.actions.FindAction("Hit");
+        specialInput = InputSystem.actions.FindAction("Special");
+        sprintInput = InputSystem.actions.FindAction("Sprint");
         
         // Timers
         currentHitCooldownTimer = 0f;
@@ -103,8 +109,16 @@ public class PlayerScript : MonoBehaviour
         currentPlayerLinearDamping = rb.linearDamping;
     }
 
+    private void OnDisable()
+    {
+        inputActionAsset.FindActionMap("BasicMap").Disable(); // Enable the BasicMap action map
+
+    }
+
     private void Update()
     {
+        // Send a debug log when I press the hit button
+        
         moveVec2 = moveInput.ReadValue<Vector2>();
 
         // Hit timer
@@ -136,6 +150,12 @@ public class PlayerScript : MonoBehaviour
                 ClearBuffer();
             }
         }
+        
+        // If the input is released while sprinting, change to Neutral State
+        if (sprintInput.WasReleasedThisFrame() && playerSM.currentState == playerSM.states[4])
+        {
+            playerSM.ChangeState(playerSM.states[0]); // Change to Neutral State
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -162,13 +182,13 @@ public class PlayerScript : MonoBehaviour
         switch (bufferedInput.name)
         {
             case "Hit":
-                OnHit(new InputAction.CallbackContext());
+                OnHit();
                 break;
             case "Special":
                 // Handle special input if needed
                 break;
             case "Sprint":
-                OnSprint(new InputAction.CallbackContext());
+                OnSprint();
                 break;
             default:
                 Debug.LogWarning($"Buffered input not recognized: {bufferedInput.name}");
@@ -211,15 +231,15 @@ public class PlayerScript : MonoBehaviour
         {
             Vector3 aimDirection = new Vector3(aimVec2.x, 0, aimVec2.y).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, baseRotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 
     // Input Methods
 
-    public void OnHit(InputAction.CallbackContext context)
+    public void OnHit()
     {
-        if ((context.started || isBuffered) && currentHitCooldownTimer >= hitCooldown)
+        if (isBuffered || currentHitCooldownTimer >= hitCooldown)
         {
             currentHitCooldownTimer = 0f; // Reset the hit cooldown timer
             switch (playerSM.currentState)
@@ -236,9 +256,9 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-    public void OnSprint(InputAction.CallbackContext context)
+    public void OnSprint()
     {
-        if ((context.started || isBuffered)&& moveVec2 != Vector2.zero)
+        if (isBuffered || moveVec2 != Vector2.zero)
         {
             switch (playerSM.currentState)
             {
@@ -251,21 +271,15 @@ public class PlayerScript : MonoBehaviour
                     break;
             }
         }
+        
 
-        if (context.canceled && playerSM.currentState == playerSM.states[4])
-        {
-            // If sprint is canceled, change back to Neutral State
-            playerSM.ChangeState(playerSM.states[0]);
-        }
     }
 
-    public void OnReset(InputAction.CallbackContext context)
+    public void OnDebugReset()
     {
         // Reset the current scene
-        if (context.started)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
     }
     
     

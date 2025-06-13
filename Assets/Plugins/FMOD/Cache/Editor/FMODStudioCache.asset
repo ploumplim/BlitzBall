@@ -22,7 +22,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 5730165856624800231}
   cacheVersion: 131847
-  cacheTime: 638847217123455601
+  cacheTime: 638846292314379336
   SerializableEventsDict: []
 --- !u!114 &5730165856624800231
 MonoBehaviour:
@@ -39,7 +39,7 @@ MonoBehaviour:
   Path: FMOD/Blitzball/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638847217123455601
+  lastModified: 638846292314379336
   FileSizes:
   - Name: Desktop
     Value: 724
@@ -59,7 +59,7 @@ MonoBehaviour:
   Path: FMOD/Blitzball/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638847217123441557
+  lastModified: 638846292314336869
   FileSizes:
   - Name: Desktop
     Value: 1074

@@ -44,6 +44,7 @@ public class HitPState : PlayerState
             BallSM hitBallSM = hitBall.GetComponent<BallSM>();
             // Apply a force to the ball using the forward direction of the player
             Rigidbody ballRigidbody = hitBall.GetComponent<Rigidbody>();
+            
             if (ballRigidbody != null)
             {
                 Vector3 forceDirection = PlayerScript.transform.forward;

@@ -7,17 +7,28 @@ public class HitBState : BallState
     public override void Enter()
     {
         base.Enter();
-        BallScript.ClampBallSpeed();
-        _timer = 0f;
+        BallScript.BallSpeedClamp();
+        BallScript.currentVelocityMagnitude = BallScript.rb.linearVelocity.magnitude; // Store the current speed
+        _timer = 0;
     }
 
     public override void UpdateTick()
     {
         base.UpdateTick();
         _timer += Time.deltaTime;
+
         if (_timer > BallScript.hitDuration)
         {
             BallSM.ChangeState(BallSM.states[2]); // Change to FlightState after hit duration
         }
+    }
+    
+    public override void Exit()
+    {
+        base.Exit();
+        // Reset any necessary variables or states here if needed
+        _timer = 0;
+        BallScript.speedDropTimer = 0; // Reset the speed drop timer
+
     }
 }
