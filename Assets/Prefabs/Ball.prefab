@@ -102,23 +102,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumLinearVelocity: 80
-  softMaximumLinearVelocity: 50
+  softMaximumLinearVelocity: 30
+  speedDropDuration: 2
   SpeedDropRateCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: -0.5
+      value: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.5
-      inSlope: -0.5
+      value: 1
+      inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
@@ -129,16 +130,18 @@ MonoBehaviour:
     m_RotationOrder: 4
   firstHitSpeed: 10
   playerCollisionSpeed: 2
-  hitDuration: 0.2
+  hitDuration: 0.3
   currentVelocityVec3: {x: 0, y: 0, z: 0}
+  currentVelocityMagnitude: 0
   rb: {fileID: 0}
   ballSM: {fileID: 0}
+  speedDropTimer: 0
   OnWallCollision:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9040121082975267472}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BallCollision, Assembly-CSharp
-        m_MethodName: TriggerShakeOnCollisison
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

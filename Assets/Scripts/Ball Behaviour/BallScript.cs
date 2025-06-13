@@ -18,12 +18,13 @@ public class BallScript : MonoBehaviour
     public float hitDuration = 0.2f; // Duration of the hit state
     
     // Method Variables
-    [HideInInspector] public Vector3 currentVelocityVec3;
-    [HideInInspector] public float currentVelocityMagnitude;
-    private float velocityFloor;
-    [HideInInspector]public Rigidbody rb;
+    [HideInInspector] public Vector3 currentVelocityVec3; // Current velocity vector of the ball (unused)
+    [HideInInspector] public float currentVelocityMagnitude; // Current speed of the ball, updated on hit
+    private float velocityFloor; // Minimum speed of the ball after the first hit, used to clamp the speed
+    [HideInInspector]public Rigidbody rb; // Reference to the Rigidbody component
     [HideInInspector] public BallSM ballSM; // Reference to the BallStateMachine component
-    [HideInInspector] public float speedDropTimer;
+    [HideInInspector] public float speedDropTimer; // Timer for the speed drop effect
+    [HideInInspector] public GameObject ownerPlayer; // Reference to the player who owns the ball
     
     // Events
     public UnityEvent OnWallCollision;

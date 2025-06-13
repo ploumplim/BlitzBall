@@ -1321,58 +1321,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: hitDuration
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: speedDropDuration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: softMaximumLinearVelocity
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: SpeedDropRateCurve.m_Curve.Array.data[0].value
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: SpeedDropRateCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: SpeedDropRateCurve.m_Curve.Array.data[0].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: SpeedDropRateCurve.m_Curve.Array.data[1].inSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: SpeedDropRateCurve.m_Curve.Array.data[0].outSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: SpeedDropRateCurve.m_Curve.Array.data[1].inWeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: SpeedDropRateCurve.m_Curve.Array.data[1].outSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: SpeedDropRateCurve.m_Curve.Array.data[0].outWeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
-      propertyPath: OnWallCollision.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1239983231244234824, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -1441,7 +1389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7198678407889935102, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7898578888370541438, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_Name

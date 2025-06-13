@@ -10,6 +10,17 @@ public class HitBState : BallState
         BallScript.BallSpeedClamp();
         BallScript.currentVelocityMagnitude = BallScript.rb.linearVelocity.magnitude; // Store the current speed
         _timer = 0;
+        BallScript.speedDropTimer = 0; // Reset the speed drop timer
+        // Ignore collisions with the owner player.
+        if (BallScript.ownerPlayer != null)
+        {
+            Physics.IgnoreCollision(BallScript.GetComponent<CapsuleCollider>(), BallScript.ownerPlayer.GetComponent<CapsuleCollider>());
+        }
+        else
+        {
+            Debug.LogWarning("Ball owner player is null, cannot ignore collision.");
+        }
+
     }
 
     public override void UpdateTick()
@@ -28,7 +39,15 @@ public class HitBState : BallState
         base.Exit();
         // Reset any necessary variables or states here if needed
         _timer = 0;
-        BallScript.speedDropTimer = 0; // Reset the speed drop timer
+        // Unignore collisions with the owner player.
+        if (BallScript.ownerPlayer != null)
+        {
+            Physics.IgnoreCollision(BallScript.GetComponent<CapsuleCollider>(), BallScript.ownerPlayer.GetComponent<CapsuleCollider>(), false);
+        }
+        else
+        {
+            Debug.LogWarning("Ball owner player is null, cannot unignore collision.");
+        }
 
     }
 }
