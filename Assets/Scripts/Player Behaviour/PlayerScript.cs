@@ -349,12 +349,20 @@ public class PlayerScript : MonoBehaviour
         
         // Hit Gizmo
         
-        float fromCorrector = hitAngle / 2f; // Correct the angle to be half for the arc
-        Handles.color = new Color(1, 0, 0, 0.2f); // Purple color with transparency
+        if (playerSM?.currentState is not HitPState)
+        {
+            Handles.color = new Color(1, 0, 0, 0.2f);
+        }
+        else
+        {
+            Handles.color = new Color(1, 0, 0, 0.7f);
+        }
+
+
         Handles.DrawSolidArc(
-            transform.position + new Vector3(0,2.5f,hitForwardOffset),
+            transform.position + new Vector3(0,0.5f,hitForwardOffset),
             Vector3.up, // Up direction for the arc
-            Quaternion.Euler(0, -hitAngle /2, 0) * Vector3.forward, // Forward direction for the arc
+            Quaternion.Euler(0, -hitAngle /2, 0) * transform.forward, // Forward direction for the arc
             hitAngle, // Angle of the arc
             hitRadius
         );
