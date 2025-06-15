@@ -1383,6 +1383,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5106135662159777289, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5303740469012545238, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_UseGravity
       value: 0
@@ -1394,6 +1398,10 @@ PrefabInstance:
     - target: {fileID: 7898578888370541438, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: m_Name
       value: BasePlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
+      propertyPath: aimMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: hitAngle

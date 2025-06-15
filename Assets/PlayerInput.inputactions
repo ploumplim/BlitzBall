@@ -6,18 +6,18 @@
             "id": "122daded-980c-4c8d-9bf9-e9f46c3ccd51",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "AimStick",
                     "type": "Value",
-                    "id": "2628e104-0248-4383-97c5-efbb175625b3",
+                    "id": "ee8d80b0-c0ff-453e-a55a-e9d7deb6e74b",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Aim",
+                    "name": "Move",
                     "type": "Value",
-                    "id": "ee8d80b0-c0ff-453e-a55a-e9d7deb6e74b",
+                    "id": "2628e104-0248-4383-97c5-efbb175625b3",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -54,15 +54,6 @@
                     "name": "DebugReset",
                     "type": "Button",
                     "id": "faaf0d0d-defa-4837-abc7-38fffcd01262",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "random",
-                    "type": "Button",
-                    "id": "97e5ddc1-a1d4-4ab3-9619-bcb78de2a17a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -110,14 +101,14 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad;Gamepad & Keyboard",
-                    "action": "Aim",
+                    "action": "AimStick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "8cab22a3-4085-4c24-9dc0-ec631bd1609a",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad;Gamepad & Keyboard",
@@ -149,23 +140,23 @@
                 },
                 {
                     "name": "",
+                    "id": "737cb18f-4e04-4d78-8332-c4f8963d7156",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8b07c7f4-1017-416a-806a-216810ee75ec",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "DebugReset",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b0a4110e-b8c5-4dad-bec2-d58203b4317e",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad & Keyboard;Gamepad",
-                    "action": "random",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

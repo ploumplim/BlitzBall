@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
     // Aim Modes
     public enum AimMode
     {
-        ForwardDirection, // Aim in the forward direction of the player
+        MoveForwardDirection, // Aim in the forward direction of the player
         RightStickDirection // Aim in the direction of the right stick
     }
     
@@ -27,7 +27,7 @@ public class PlayerScript : MonoBehaviour
     public float sprintBoostRecoveryRate = 0.5f; // Rate at which the sprint boost recovers
     
     [Header("Aim Settings")]
-    public AimMode aimMode = AimMode.ForwardDirection; // Default to forward direction aiming
+    public AimMode aimMode = AimMode.MoveForwardDirection; // Default to forward direction aiming
 
     [Header("Hit Settings")]
     public float hitForce = 10f; // Force applied to the ball when hit
@@ -96,11 +96,12 @@ public class PlayerScript : MonoBehaviour
         
         
         // Initialize Inputs
-        aimInput = InputSystem.actions.FindAction("Aim");
-        moveInput = InputSystem.actions.FindAction("Move");
-        hitInput = InputSystem.actions.FindAction("Hit");
-        specialInput = InputSystem.actions.FindAction("Special");
-        sprintInput = InputSystem.actions.FindAction("Sprint");
+        moveInput = playerInput.actions.FindAction("Move");
+        aimInput = playerInput.actions.FindAction("AimStick");
+        hitInput = playerInput.actions.FindAction("Hit");
+        specialInput = playerInput.actions.FindAction("Special");
+        sprintInput = playerInput.actions.FindAction("Sprint");
+        
         
         // Timers
         currentHitCooldownTimer = 0f;
@@ -109,15 +110,15 @@ public class PlayerScript : MonoBehaviour
 
     private void OnDisable()
     {
-        inputActionAsset.FindActionMap("BasicMap").Disable(); // Enable the BasicMap action map
+        inputActionAsset.FindActionMap("BasicMap").Disable(); // Disable the BasicMap action map
 
     }
 
     private void Update()
     {
-        // Send a debug log when I press the hit button
         
         moveVec2 = moveInput.ReadValue<Vector2>();
+        aimVec2 = aimInput.ReadValue<Vector2>();
 
         // Hit timer
         if (currentHitCooldownTimer < hitCooldown)
@@ -211,23 +212,24 @@ public class PlayerScript : MonoBehaviour
 
     public void Aim(float rotationSpeed)
     {
+        Vector2 aimVal = new Vector2();
         switch (aimMode)
         {
-            case AimMode.ForwardDirection:
+            case AimMode.MoveForwardDirection:
                 // Turn the player to face towards their front.
-                aimVec2 = moveVec2;
+                aimVal = moveVec2;
                 break;
             case AimMode.RightStickDirection:
                 // Use the right stick direction for aiming
-                aimVec2 = aimInput.ReadValue<Vector2>();
+                aimVal = aimVec2;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
         // Make the game object's forward position be equal to the aim vector
-        if (aimVec2.sqrMagnitude > 0.01f)
+        if (aimVal.sqrMagnitude > 0.01f)
         {
-            Vector3 aimDirection = new Vector3(aimVec2.x, 0, aimVec2.y).normalized;
+            Vector3 aimDirection = new Vector3(aimVal.x, 0, aimVal.y).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
