@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6797388803364716857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1054be3d4b57867418a6ec6fb7c5c194, type: 3}
+  m_Name: EdgeDetection
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  settings:
+    renderPassEvent: 400
+    outlineThickness: 1
+    outlineColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,7 +44,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
   - {fileID: 8833915279584985379}
-  m_RendererFeatureMap: ad6b866f10d7b46c23018f87245f987a
+  - {fileID: -6797388803364716857}
+  m_RendererFeatureMap: ad6b866f10d7b46c23018f87245f987ac77e3abfe5d2aaa1
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -65,16 +83,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62c9c65cf3354c93be831c8bc075510, type: 3}
   m_Name: ScreenSpaceAmbientOcclusion
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   m_Settings:
     AOMethod: 0
-    Downsample: 0
-    AfterOpaque: 0
+    Downsample: 1
+    AfterOpaque: 1
     Source: 1
     NormalSamples: 1
-    Intensity: 0.4
+    Intensity: 0.6
     DirectLightingStrength: 0.25
-    Radius: 0.3
+    Radius: 0.6
     Samples: 1
     BlurQuality: 0
     Falloff: 100
