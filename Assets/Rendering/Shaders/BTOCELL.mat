@@ -117,6 +117,7 @@ Material:
     - _SpecularForce: 0.2
     - _StepAdditional: 0
     - _StepV: 0
+    - _Tiling: 1
     - _hades: 0.508
     - _normalScale: 0.33
     - _rimMn: 0.6
