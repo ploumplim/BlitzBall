@@ -97,8 +97,8 @@ Shader "Greenify"
 /*ASEBEGIN
 Version=19900
 Node;AmplifyShaderEditor.TextureCoordinatesNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;6;-712.7105,171.7058;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.CustomExpressionNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;5;-480,144;Inherit;False;uint2 pixelCoords = uint2(uv * _ScreenSize.xy)@$return LOAD_TEXTURE2D_X_LOD(_BlitTexture, pixelCoords, 0)@;4;Create;1;True;uv;FLOAT2;0,0;In;;Inherit;False;Unity_Universal_SampleBuffer_BlitSource_float;True;False;0;;False;1;0;FLOAT2;0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;8;-170.5258,334.7689;Inherit;False;Constant;_Float0;Float 0;0;0;Create;True;0;0;0;False;0;False;0.2;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.CustomExpressionNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;5;-464,160;Inherit;False;uint2 pixelCoords = uint2(uv * _ScreenSize.xy)@$return LOAD_TEXTURE2D_X_LOD(_BlitTexture, pixelCoords, 0)@;4;Create;1;True;uv;FLOAT2;0,0;In;;Inherit;False;Unity_Universal_SampleBuffer_BlitSource_float;True;False;0;;False;1;0;FLOAT2;0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.SimpleAddOpNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;7;-48,192;Inherit;False;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;0;128,0;Float;False;True;-1;3;AmplifyShaderEditor.MaterialInspector;100;14;Greenify;c136ef60ecd6a9e4e9feb8f511c03c61;True;ColorBlitPass;0;0;ColorBlitPass;1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;True;2;RenderType=Opaque=RenderType;RenderPipeline=UniversalPipeline;False;False;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;0;;0;0;Standard;0;0;1;True;False;;False;0
 WireConnection;5;0;6;0
@@ -106,4 +106,4 @@ WireConnection;7;0;5;0
 WireConnection;7;1;8;0
 WireConnection;0;0;7;0
 ASEEND*/
-//CHKSM=4D1306197D1BAD150F783495A10B2A8211AC8205
+//CHKSM=09618185F1DE01D9D3BF9538BDEA88BC56E4BC68
