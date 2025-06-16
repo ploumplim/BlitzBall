@@ -3,6 +3,7 @@ using UnityEngine;
 public class KnockPState : PlayerState
 {
     private float timer;
+    [HideInInspector] public float knockbackDuration; // Duration of the knockback effect
     public override void Enter()
     {
         base.Enter();
@@ -12,11 +13,17 @@ public class KnockPState : PlayerState
         // Change the player's mass and linear damping to simulate knockback
         PlayerScript.rb.mass *= PlayerScript.knockbackMassMult;
         PlayerScript.rb.linearDamping *= PlayerScript.knockbackLinearDampingMult;
-        // Apply knockback force using the lastCollidedBall if it exists
+        // If lastCollidedBall exists, apply a knockback force away from the ball using the knockback force curve
         if (PlayerScript.lastCollidedBall != null)
         {
-            Vector3 knockbackDirection = (PlayerScript.transform.position - PlayerScript.lastCollidedBall.transform.position).normalized;
-            PlayerScript.rb.AddForce(knockbackDirection * PlayerScript.knockbackForce, ForceMode.Impulse);
+            BallScript collidedBallScript = PlayerScript.lastCollidedBall.GetComponent<BallScript>();
+            if (collidedBallScript != null)
+            {
+                Vector3 knockbackDirection = (PlayerScript.transform.position - collidedBallScript.transform.position).normalized;
+                float knockbackForce = PlayerScript.knockbackForceCurve.Evaluate(collidedBallScript.rb.linearVelocity.magnitude / 
+                    collidedBallScript.maximumLinearVelocity) * PlayerScript.fullKnockBackForce;
+                PlayerScript.rb.linearVelocity = knockbackDirection * knockbackForce;
+            }
         }
         
     }
@@ -25,8 +32,23 @@ public class KnockPState : PlayerState
     {
         base.UpdateTick();
         timer += Time.deltaTime;
+        
+        // Using the duration curve, calculate the knockback duration based on the last ball collided's current velocity
+        if (PlayerScript.lastCollidedBall != null)
+        {
+            BallScript collidedBallScript = PlayerScript.lastCollidedBall.GetComponent<BallScript>();
+            if (collidedBallScript != null)
+            {
+                knockbackDuration = PlayerScript.knockbackDurationCurve.Evaluate(collidedBallScript.rb.linearVelocity.magnitude / 
+                    collidedBallScript.maximumLinearVelocity) * PlayerScript.fullKnockBackDuration;
+                
+            }
+        }
+        
+        
+        
         // Transition to the idle state after a certain duration
-        if (timer >= PlayerScript.knockbackDuration)
+        if (timer >= knockbackDuration)
         {
             PlayerSM.ChangeState(PlayerSM.states[0]);
         }

@@ -4916,7 +4916,7 @@ Transform:
   m_GameObject: {fileID: 1649927471838773897}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.00000011921, z: 0.001}
+  m_LocalPosition: {x: 0, y: 2, z: 0.001}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -9122,7 +9122,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minVertexDistance: 0.05
+    minVertexDistance: 0.5
     textureMode: 0
     textureScale: {x: 1, y: 1}
     ribbonCount: 1
@@ -10029,7 +10029,7 @@ Transform:
   m_GameObject: {fileID: 7898578888370541438}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10056,10 +10056,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.888438
-  m_Height: 3.6279116
+  m_Radius: 0.9
+  m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.85, z: 0}
 --- !u!54 &5303740469012545238
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10100,7 +10100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 6bb5207dd87075e4485226855065b1f6, type: 3}
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -10184,6 +10184,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: faaf0d0d-defa-4837-abc7-38fffcd01262
     m_ActionName: 'BasicMap/DebugBallReset[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 97e5ddc1-a1d4-4ab3-9619-bcb78de2a17a
+    m_ActionName: 'BasicMap/random[/Keyboard/w]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad & Keyboard
   m_DefaultActionMap: BasicMap

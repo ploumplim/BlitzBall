@@ -37,6 +37,9 @@ public class PlayerVisuals : MonoBehaviour
 
     private void Update()
     {
+        
+
+        
         // State checker
         switch (playerSM.currentState)
         {

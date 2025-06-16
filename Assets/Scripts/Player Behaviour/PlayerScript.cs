@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
     // Aim Modes
     public enum AimMode
     {
-        ForwardDirection, // Aim in the forward direction of the player
+        MoveForwardDirection, // Aim in the forward direction of the player
         RightStickDirection // Aim in the direction of the right stick
     }
     
@@ -27,7 +27,7 @@ public class PlayerScript : MonoBehaviour
     public float sprintBoostRecoveryRate = 0.5f; // Rate at which the sprint boost recovers
     
     [Header("Aim Settings")]
-    public AimMode aimMode = AimMode.ForwardDirection; // Default to forward direction aiming
+    public AimMode aimMode = AimMode.MoveForwardDirection; // Default to forward direction aiming
 
     [Header("Hit Settings")]
     public float hitForce = 10f; // Force applied to the ball when hit
@@ -35,12 +35,15 @@ public class PlayerScript : MonoBehaviour
     public float hitCooldown = 0.5f; // Cooldown time for hit action
     public float hitRadius = 1.0f; // Radius for hit detection
     public float hitAngle = 360f; // Angle for hit detection cone
+    public float hitForwardOffset = 0.5f; // Offset for hit detection in the forward direction
     
     [Header("Knockback Settings")]
-    public float knockbackForce = 5f; // Force applied to the player when hit by a ball
-    public float knockbackDuration = 0.5f; // Duration of the knock-back effect
     public float knockbackMassMult = 1.0f; // Multiplier for the player's mass during knock-back
     public float knockbackLinearDampingMult = 0.5f; // Linear damping applied to the player during knock-back
+    public float fullKnockBackForce = 20f; // Full force applied during knock-back
+    public float fullKnockBackDuration = 1.5f; // Full duration of the knock-back effect
+    public AnimationCurve knockbackDurationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f); // Curve for knock-back duration transition
+    public AnimationCurve knockbackForceCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f); // Curve for knock-back force transition
     
     [Header("Input Buffering Settings")]
     public float inputBufferTime = 0.2f; // Time to buffer inputs
@@ -52,6 +55,7 @@ public class PlayerScript : MonoBehaviour
     // private References
     private PlayerSM playerSM;
     private PlayerInput playerInput;
+    private InputActionAsset inputActionAsset;
     [HideInInspector]public Rigidbody rb;
     
     // Inputs
@@ -72,8 +76,6 @@ public class PlayerScript : MonoBehaviour
     private float inputBufferTimer; // Timer for input buffering
     private bool isBuffered; // Flag to check if the input is buffered
     [HideInInspector] public float currentSprintBoost; // Current sprint boost value
-    private float currentPlayerMass; // Current mass of the player, used for hit calculations
-    private float currentPlayerLinearDamping; // Current linear damping of the player, used for hit calculations
     [HideInInspector] public GameObject lastCollidedBall; // Last ball collided with, used for hit calculations
     
     
@@ -82,30 +84,41 @@ public class PlayerScript : MonoBehaviour
     public UnityEvent onSprintStarted;
     public UnityEvent onSprintEnded;
 
+
+    
     private void Start()
     {
         playerSM = GetComponent<PlayerSM>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        inputActionAsset = playerInput.actions; // Get the InputActionAsset from PlayerInput
+        inputActionAsset.FindActionMap("BasicMap").Enable(); // Enable the BasicMap action map
+        
         
         // Initialize Inputs
-        aimInput = playerInput.actions["Aim"];
-        moveInput = playerInput.actions["Move"];
-        hitInput = playerInput.actions["Hit"];
-        specialInput = playerInput.actions["Special"];
-        sprintInput = playerInput.actions["Sprint"];
+        moveInput = playerInput.actions.FindAction("Move");
+        aimInput = playerInput.actions.FindAction("AimStick");
+        hitInput = playerInput.actions.FindAction("Hit");
+        specialInput = playerInput.actions.FindAction("Special");
+        sprintInput = playerInput.actions.FindAction("Sprint");
+        
         
         // Timers
         currentHitCooldownTimer = 0f;
         
-        // Assign Physics properties
-        currentPlayerMass = rb.mass;
-        currentPlayerLinearDamping = rb.linearDamping;
+    }
+
+    private void OnDisable()
+    {
+        inputActionAsset.FindActionMap("BasicMap").Disable(); // Disable the BasicMap action map
+
     }
 
     private void Update()
     {
+        
         moveVec2 = moveInput.ReadValue<Vector2>();
+        aimVec2 = aimInput.ReadValue<Vector2>();
 
         // Hit timer
         if (currentHitCooldownTimer < hitCooldown)
@@ -136,6 +149,12 @@ public class PlayerScript : MonoBehaviour
                 ClearBuffer();
             }
         }
+        
+        // If the input is released while sprinting, change to Neutral State
+        if (sprintInput.WasReleasedThisFrame() && playerSM.currentState == playerSM.states[4])
+        {
+            playerSM.ChangeState(playerSM.states[0]); // Change to Neutral State
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -162,13 +181,13 @@ public class PlayerScript : MonoBehaviour
         switch (bufferedInput.name)
         {
             case "Hit":
-                OnHit(new InputAction.CallbackContext());
+                OnHit();
                 break;
             case "Special":
                 // Handle special input if needed
                 break;
             case "Sprint":
-                OnSprint(new InputAction.CallbackContext());
+                OnSprint();
                 break;
             default:
                 Debug.LogWarning($"Buffered input not recognized: {bufferedInput.name}");
@@ -193,33 +212,34 @@ public class PlayerScript : MonoBehaviour
 
     public void Aim(float rotationSpeed)
     {
+        Vector2 aimVal = new Vector2();
         switch (aimMode)
         {
-            case AimMode.ForwardDirection:
+            case AimMode.MoveForwardDirection:
                 // Turn the player to face towards their front.
-                aimVec2 = moveVec2;
+                aimVal = moveVec2;
                 break;
             case AimMode.RightStickDirection:
                 // Use the right stick direction for aiming
-                aimVec2 = aimInput.ReadValue<Vector2>();
+                aimVal = aimVec2;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
         // Make the game object's forward position be equal to the aim vector
-        if (aimVec2.sqrMagnitude > 0.01f)
+        if (aimVal.sqrMagnitude > 0.01f)
         {
-            Vector3 aimDirection = new Vector3(aimVec2.x, 0, aimVec2.y).normalized;
+            Vector3 aimDirection = new Vector3(aimVal.x, 0, aimVal.y).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, baseRotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 
     // Input Methods
 
-    public void OnHit(InputAction.CallbackContext context)
+    public void OnHit()
     {
-        if ((context.started || isBuffered) && currentHitCooldownTimer >= hitCooldown)
+        if (isBuffered || currentHitCooldownTimer >= hitCooldown)
         {
             currentHitCooldownTimer = 0f; // Reset the hit cooldown timer
             switch (playerSM.currentState)
@@ -236,9 +256,9 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-    public void OnSprint(InputAction.CallbackContext context)
+    public void OnSprint()
     {
-        if ((context.started || isBuffered)&& moveVec2 != Vector2.zero)
+        if (isBuffered || moveVec2 != Vector2.zero)
         {
             switch (playerSM.currentState)
             {
@@ -251,26 +271,20 @@ public class PlayerScript : MonoBehaviour
                     break;
             }
         }
+        
 
-        if (context.canceled && playerSM.currentState == playerSM.states[4])
-        {
-            // If sprint is canceled, change back to Neutral State
-            playerSM.ChangeState(playerSM.states[0]);
-        }
     }
 
-    public void OnReset(InputAction.CallbackContext context)
+    public void OnDebugReset()
     {
         // Reset the current scene
-        if (context.started)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
     }
     
     
     // This method checks for a ball within a cone defined by minAngle and maxAngle, and returns the first ball found within that cone.
-    public GameObject BallInConeHitBox( float detectionRadius, bool isFixed = true, float minAngle = 0f, float maxAngle = 360f, float fixedAngle = 360f, AnimationCurve transitionCurve = null,
+    public GameObject BallInConeHitBox( float detectionRadius, bool isFixed = true, float forwardOffset = 0f, float minAngle = 0f, float maxAngle = 360f, float fixedAngle = 360f, AnimationCurve transitionCurve = null,
         float currentTime = 0f, float maxTime = 1f)
     {
         usingConeHit = true;
@@ -302,7 +316,7 @@ public class PlayerScript : MonoBehaviour
         currentAngle = fixedAngle; // Update the current angle to the fixed angle for the cone hit detection
         currentDetectionRadius = detectionRadius; // Update the current detection radius
         
-        inConeColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+        inConeColliders = Physics.OverlapSphere(transform.position + (transform.forward * forwardOffset), detectionRadius);
         foreach (Collider hitCollider in inConeColliders)
         {
             if (!hitCollider.gameObject.CompareTag("Ball"))
@@ -332,19 +346,28 @@ public class PlayerScript : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * 5f);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, hitRadius);
+        Gizmos.DrawRay(transform.position + new Vector3(0,2.5f,0), transform.forward * 5f);
+
         
-        // Draw the angle whenever the hitcone is being used
-        if (usingConeHit)
+        // Hit Gizmo
+        
+        if (playerSM?.currentState is not HitPState)
         {
-            Handles.color = new Color(1,0,1,0.5f);
-            Vector3 forward = transform.forward;
-            Handles.DrawSolidArc(transform.position,
-                Vector3.up,
-                Quaternion.Euler(0, -currentAngle/2f, 0)*forward, currentAngle,
-                currentDetectionRadius);
+            Handles.color = new Color(1, 0, 0, 0.2f);
         }
+        else
+        {
+            Handles.color = new Color(1, 0, 0, 0.7f);
+        }
+
+
+        Handles.DrawSolidArc(
+            transform.position + transform.forward * hitForwardOffset,
+            Vector3.up, // Up direction for the arc
+            Quaternion.Euler(0, -hitAngle /2, 0) * transform.forward, // Forward direction for the arc
+            hitAngle, // Angle of the arc
+            hitRadius
+        );
+
     }
 }
