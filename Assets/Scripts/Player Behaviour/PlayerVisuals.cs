@@ -21,12 +21,12 @@ public class PlayerVisuals : MonoBehaviour
         playerSM = GetComponent<PlayerSM>();
         // Hit particle init
         // Set the particle's shape emission's radius to be the same as the hit radius
-        var shape = hitParticleSystem.shape;
-        shape.radius = playerScript.hitRadius;
+        var hitShape = hitParticleSystem.shape;
+        var hitMain = hitParticleSystem.main;
+        float hitStartSize = hitMain.startSize.constant;
+        float currentShapeRadius = hitShape.radius;
+        hitShape.radius = playerScript.hitRadius - Mathf.Clamp(hitStartSize / 2, 0, currentShapeRadius / 2); // Adjust radius to account for the particle's start size
         
-        // Set the particle's duration to be the same as the hit duration
-        var main = hitParticleSystem.main;
-        main.duration = playerScript.hitDuration;
         
         // Store the current start size of the sprint start particle system
         var sprintStartMain = sprintStartParticleSystem.main;
@@ -37,6 +37,9 @@ public class PlayerVisuals : MonoBehaviour
 
     private void Update()
     {
+        
+
+        
         // State checker
         switch (playerSM.currentState)
         {
@@ -65,11 +68,13 @@ public class PlayerVisuals : MonoBehaviour
         // Create an instance of the hit particle system at the player's position
         
         GameObject instance = Instantiate(hitParticleSystem.gameObject, transform.position, Quaternion.identity);
-        instance.transform.SetParent(transform);
         ParticleSystem instanceParticleSystem = instance.GetComponent<ParticleSystem>();
-        instanceParticleSystem.Play();
         // Destroy the instance after the particle system has finished playing
-        Destroy(instance, instanceParticleSystem.main.duration);
+        Destroy(instance, instanceParticleSystem.main.duration * 2);
+        instance.transform.SetParent(transform);
+        instance.transform.rotation = Quaternion.identity;
+        instanceParticleSystem.Play();
+        
     }
 
     public void OnSprintStarted()

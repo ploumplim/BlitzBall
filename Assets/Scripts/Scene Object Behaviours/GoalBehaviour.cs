@@ -53,7 +53,6 @@ public class GoalBehaviour : MonoBehaviour
 
     public void TriggerEntered(Collider other = null)
     {
-        Debug.Log("Trigger Started");
         
         // Check if the collider is not null and has a tag
         if (other == null)
@@ -65,7 +64,6 @@ public class GoalBehaviour : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Ball":
-                Debug.Log("Goal Triggered by: " + other.gameObject.name);
                 ApplyPoints();
                 UpdateGoalText();
                 DeactivateGoal();

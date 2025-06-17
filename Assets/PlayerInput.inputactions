@@ -6,40 +6,40 @@
             "id": "122daded-980c-4c8d-9bf9-e9f46c3ccd51",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "AimStick",
                     "type": "Value",
-                    "id": "2628e104-0248-4383-97c5-efbb175625b3",
-                    "expectedControlType": "",
+                    "id": "ee8d80b0-c0ff-453e-a55a-e9d7deb6e74b",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Aim",
+                    "name": "Move",
                     "type": "Value",
-                    "id": "ee8d80b0-c0ff-453e-a55a-e9d7deb6e74b",
-                    "expectedControlType": "",
+                    "id": "2628e104-0248-4383-97c5-efbb175625b3",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
                     "name": "Hit",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "be2ac62e-ee1b-4e90-98ea-365e39124a30",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Special",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "607861af-804f-44e1-af14-232ab657d97f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Sprint",
@@ -67,7 +67,7 @@
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -78,7 +78,7 @@
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "Hit",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -89,7 +89,7 @@
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "Hit",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -100,18 +100,18 @@
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Aim",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
+                    "action": "AimStick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "8cab22a3-4085-4c24-9dc0-ec631bd1609a",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "Special",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -122,7 +122,7 @@
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "Special",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -131,6 +131,17 @@
                     "name": "",
                     "id": "4cf2f6da-aa73-4dfb-92be-6fcc8669cee5",
                     "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "737cb18f-4e04-4d78-8332-c4f8963d7156",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -144,7 +155,7 @@
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "DebugReset",
                     "isComposite": false,
                     "isPartOfComposite": false
