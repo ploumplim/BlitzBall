@@ -75,7 +75,7 @@
                 {
                     "name": "",
                     "id": "8961a134-aa59-4a7e-9d4d-c4d4d397c50e",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad;Gamepad & Keyboard",
@@ -108,7 +108,7 @@
                 {
                     "name": "",
                     "id": "8cab22a3-4085-4c24-9dc0-ec631bd1609a",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad;Gamepad & Keyboard",
@@ -141,10 +141,10 @@
                 {
                     "name": "",
                     "id": "737cb18f-4e04-4d78-8332-c4f8963d7156",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false

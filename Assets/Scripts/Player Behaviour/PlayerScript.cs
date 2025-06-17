@@ -69,12 +69,10 @@ public class PlayerScript : MonoBehaviour
     
     // Method Variables
     private Collider[] inConeColliders;
-    private bool usingConeHit; // Flag to check if the cone hit detection is being used
     private float currentAngle; // Current angle for the cone hit detection
     private float currentDetectionRadius; // Current detection radius for the cone hit detection
     private float currentHitCooldownTimer; // Current cooldown for the hit action
     private float inputBufferTimer; // Timer for input buffering
-    private bool isBuffered; // Flag to check if the input is buffered
     [HideInInspector] public float currentSprintBoost; // Current sprint boost value
     [HideInInspector] public GameObject lastCollidedBall; // Last ball collided with, used for hit calculations
     
@@ -177,7 +175,6 @@ public class PlayerScript : MonoBehaviour
     
     void ExecuteBufferedInput()
     {
-        isBuffered = true;
         switch (bufferedInput.name)
         {
             case "Hit":
@@ -239,14 +236,13 @@ public class PlayerScript : MonoBehaviour
 
     public void OnHit()
     {
-        if (isBuffered || currentHitCooldownTimer >= hitCooldown)
+        if (currentHitCooldownTimer >= hitCooldown)
         {
             currentHitCooldownTimer = 0f; // Reset the hit cooldown timer
             switch (playerSM.currentState)
             {
                 case NeutralPState: // Neutral State
                 case SprintPState: // Sprint State
-                    isBuffered = false;
                     playerSM.ChangeState(playerSM.states[1]); // Change to Hit State
                     break;
                 default:
@@ -258,12 +254,11 @@ public class PlayerScript : MonoBehaviour
     }
     public void OnSprint()
     {
-        if (isBuffered || moveVec2 != Vector2.zero)
+        if (moveVec2 != Vector2.zero)
         {
             switch (playerSM.currentState)
             {
                 case NeutralPState: // Neutral State
-                    isBuffered = false;
                     playerSM.ChangeState(playerSM.states[4]); // Change to Sprint State
                     break;
                 default:
@@ -273,6 +268,14 @@ public class PlayerScript : MonoBehaviour
         }
         
 
+    }
+    
+    public void OnSpecial()
+    {
+        
+        // Handle special input if needed
+        // This can be used for special abilities or actions
+        Debug.Log("Special action triggered!");
     }
 
     public void OnDebugReset()
@@ -287,7 +290,6 @@ public class PlayerScript : MonoBehaviour
     public GameObject BallInConeHitBox( float detectionRadius, bool isFixed = true, float forwardOffset = 0f, float minAngle = 0f, float maxAngle = 360f, float fixedAngle = 360f, AnimationCurve transitionCurve = null,
         float currentTime = 0f, float maxTime = 1f)
     {
-        usingConeHit = true;
         if (!isFixed) // if the angle is not fixed, we need to check the min and max angles and set the animation curve accordingly
         {
             if (minAngle < 0 || maxAngle > 360 || minAngle >= maxAngle)
@@ -329,7 +331,6 @@ public class PlayerScript : MonoBehaviour
             {
                 currentAngle = 0f;
                 currentDetectionRadius = 0f;
-                usingConeHit = false;
                 // If the ball is within the cone, return it
                 return hitCollider.gameObject;
             }
@@ -338,7 +339,6 @@ public class PlayerScript : MonoBehaviour
         //Reset all cone hit detection variables
         currentAngle = 0f;
         currentDetectionRadius = 0f;
-        usingConeHit = false;
         return null;
     }
     
