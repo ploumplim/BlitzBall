@@ -15,18 +15,18 @@ MonoBehaviour:
   m_functionInfo: "// Made with Amplify Shader Editor v1.9.9\n// Available at the
     Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19900\nNode;AmplifyShaderEditor.ComponentMaskNode,
     AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;3;-192,0;Inherit;False;True;True;True;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.BreakToComponentsNode,
-    AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;4;-144,192;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15\nNode;AmplifyShaderEditor.CustomExpressionNode,
+    AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;4;-144,192;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15\nNode;AmplifyShaderEditor.FunctionInput,
+    AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;9;-912,-128;Inherit;False;UV;2;0;True;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.TextureCoordinatesNode,
+    AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;10;-1264,-128;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.CustomExpressionNode,
     AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;1;-640,-128;Inherit;False;uint2
     pixelCoords = uint2(uv * _ScreenSize.xy)@$return LOAD_TEXTURE2D_X_LOD(_BlitTexture,
-    pixelCoords, 0)@;4;Create;1;True;uv;FLOAT2;0,0;In;;Inherit;False;Unity_Universal_SampleBuffer_BlitSource_float;True;False;0;;False;1;0;FLOAT2;0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.FunctionInput,
-    AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;9;-912,-128;Inherit;False;UV;2;0;True;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.TextureCoordinatesNode,
-    AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;10;-1264,-128;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.FunctionOutput,
+    pixelCoords, 0)@;4;Create;1;True;uv;FLOAT2;0,0;In;;Inherit;False;Unity_Universal_SampleBuffer_BlitSource_float;True;False;0;;False;1;0;FLOAT2;0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.FunctionOutput,
     AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;5;64,128;Inherit;False;False;-1;R;2;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput,
     AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;6;64,224;Inherit;False;False;-1;G;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput,
     AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;7;64,320;Inherit;False;False;-1;B;4;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput,
     AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;8;64,416;Inherit;False;False;-1;A;5;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput,
     AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;2;64,0;Inherit;False;False;-1;RGB;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput,
-    AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;0;32,-128;Inherit;False;True;-1;RGBA;0;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nWireConnection;3;0;1;0\nWireConnection;4;0;1;0\nWireConnection;1;0;9;0\nWireConnection;9;0;10;0\nWireConnection;5;0;4;0\nWireConnection;6;0;4;1\nWireConnection;7;0;4;2\nWireConnection;8;0;4;3\nWireConnection;2;0;3;0\nWireConnection;0;0;1;0\nASEEND*/\n//CHKSM=44DE22E4B49182AAF085B8F5AC9A71C0216A789C"
+    AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;0;32,-128;Inherit;False;True;-1;RGBA;0;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nWireConnection;3;0;1;0\nWireConnection;4;0;1;0\nWireConnection;9;0;10;0\nWireConnection;1;0;9;0\nWireConnection;5;0;4;0\nWireConnection;6;0;4;1\nWireConnection;7;0;4;2\nWireConnection;8;0;4;3\nWireConnection;2;0;3;0\nWireConnection;0;0;1;0\nASEEND*/\n//CHKSM=7E1B54181FDC2647F7BAC81865B1B63CF2F4A8CC"
   m_functionName: 
   m_description: 'C''est BlitSource only pour le moment :3
 
@@ -53,6 +53,6 @@ MonoBehaviour:
   m_headerStyle: 2
   m_headerColor: {r: 0.2739409, g: 0.8490566, b: 0.44623506, a: 1}
   m_customNodeCategory: 
-  m_previewPosition: 0
+  m_previewPosition: 3
   m_hidden: 0
   m_url: hevno.artstation.com
