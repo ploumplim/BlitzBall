@@ -10117,8 +10117,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8743260033527591763}
         m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
-        m_MethodName: Move
-        m_Mode: 4
+        m_MethodName: OnMove
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10130,7 +10130,19 @@ MonoBehaviour:
     m_ActionId: 2628e104-0248-4383-97c5-efbb175625b3
     m_ActionName: 'BasicMap/Move[/XInputControllerWindows/leftStick]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8743260033527591763}
+        m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
+        m_MethodName: OnAim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: ee8d80b0-c0ff-453e-a55a-e9d7deb6e74b
     m_ActionName: 'BasicMap/Aim[/XInputControllerWindows/rightStick]'
   - m_PersistentCalls:

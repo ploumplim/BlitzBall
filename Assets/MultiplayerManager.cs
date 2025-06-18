@@ -11,7 +11,6 @@ public class MultiplayerManager : MonoBehaviour
     public List<Gamepad> GamepadList;
     public GameObject PlayerPrefab;
     
-    public HandleGamePads handleGamePads;
 
     void Awake()
     {
@@ -37,16 +36,18 @@ public class MultiplayerManager : MonoBehaviour
 
     public void SpawnPlayersForGamepads()
     {
-        foreach (var gamepad in GamepadList)
+        foreach (Gamepad gamepad in GamepadList)
         {
-            var playerInput = PlayerInput.Instantiate(
+            PlayerInput playerInput = PlayerInput.Instantiate(
                 PlayerPrefab,
                 controlScheme: "Gamepad",
                 pairWithDevice: gamepad,
                 splitScreenIndex: -1
             );
+
+            playerInput.gameObject.name = $"Base Player {playerInput.playerIndex}";
             
-            var playerScript = playerInput.GetComponent<PlayerScript>();
+            PlayerScript playerScript = playerInput.GetComponent<PlayerScript>();
             if (playerScript != null)
             {
                 playerScript.gamepad = gamepad;
@@ -59,7 +60,6 @@ public class MultiplayerManager : MonoBehaviour
                 
                 Debug.Log($"Ajout au dictionnaire : PlayerScript = {playerScript.name}, Gamepad = {gamepad.deviceId}, PlayerIndex = {playerIndex}");
             }
-            Debug.Log(playerInput.actions);
         }
     }
 
@@ -76,7 +76,7 @@ public class MultiplayerManager : MonoBehaviour
                 if (action == null) continue;
                 if (action.triggered)
                 {
-                    Debug.Log($"[{playerScript.name}] Action déclenchée : {action.name} (par Gamepad {kvp.Value.gamepad.deviceId})");
+                    //Debug.Log($"[{playerScript.name}] Action déclenchée : {action.name} (par Gamepad {kvp.Value.gamepad.deviceId})");
                 }
             }
         }

@@ -110,6 +110,31 @@ public class PlayerScript : MonoBehaviour
         currentHitCooldownTimer = 0f;
         
     }
+    
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            moveVec2 = context.ReadValue<Vector2>();
+        }
+        else
+        {
+            moveVec2 = Vector2.zero;
+        }
+    }
+    
+    public void OnAim(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            aimVec2 = context.ReadValue<Vector2>();
+        }
+        else
+        {
+            aimVec2 = Vector2.zero;
+        }
+       
+    }
 
     private void OnDisable()
     {
@@ -119,9 +144,6 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        
-        moveVec2 = moveInput.ReadValue<Vector2>();
-        aimVec2 = aimInput.ReadValue<Vector2>();
 
         // Hit timer
         if (currentHitCooldownTimer < hitCooldown)
