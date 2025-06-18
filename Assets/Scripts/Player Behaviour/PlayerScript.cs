@@ -88,12 +88,16 @@ public class PlayerScript : MonoBehaviour
     public UnityEvent onSprintEnded;
 
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     
     private void Start()
     {
         playerSM = GetComponent<PlayerSM>();
         playerInput = GetComponent<PlayerInput>();
-        rb = GetComponent<Rigidbody>();
+        
         inputActionAsset = playerInput.actions; // Get the InputActionAsset from PlayerInput
         inputActionAsset.FindActionMap("BasicMap").Enable(); // Enable the BasicMap action map
         

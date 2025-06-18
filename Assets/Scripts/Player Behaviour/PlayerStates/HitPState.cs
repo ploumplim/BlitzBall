@@ -1,7 +1,5 @@
-using Unity.Services.Matchmaker.Models;
-using UnityEditor.VersionControl;
 using UnityEngine;
-[CreateAssetMenu(fileName = "HitPState", menuName = "Player/States/HitPState")]
+
 public class HitPState : PlayerState
 {
     private float _timer;

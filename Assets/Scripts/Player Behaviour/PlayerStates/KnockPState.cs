@@ -1,5 +1,5 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "KnockPState", menuName = "Player/States/KnockPState")]
+
 public class KnockPState : PlayerState
 {
     private float timer;

@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewPlayerState", menuName = "Player/State")]
-public class PlayerState : ScriptableObject
+public class PlayerState : MonoBehaviour
 {
     protected PlayerScript PlayerScript;
     protected PlayerSM PlayerSM;

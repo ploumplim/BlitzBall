@@ -1,5 +1,5 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "SprintPState", menuName = "Player/States/SprintPState")]
+
 public class SprintPState : PlayerState
 {
     private float _timer;
