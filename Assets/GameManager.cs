@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public List<PlayerScript> PlayerScriptList;
     public Dictionary<PlayerScript, PlayerData> PlayerScriptDictionary = new Dictionary<PlayerScript, PlayerData>();
+    
+    
     void Awake()
     {
         if (Instance != null && Instance != this)

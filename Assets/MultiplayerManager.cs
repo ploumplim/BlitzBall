@@ -10,6 +10,8 @@ public class MultiplayerManager : MonoBehaviour
     public static MultiplayerManager Instance { get; private set; }
     public List<Gamepad> GamepadList;
     public GameObject PlayerPrefab;
+    
+    public HandleGamePads handleGamePads;
 
     void Awake()
     {
@@ -30,76 +32,53 @@ public class MultiplayerManager : MonoBehaviour
 
     private void Update()
     {
-        testInputFromController();
+        CheckGamepadActions();
     }
 
     public void SpawnPlayersForGamepads()
     {
         foreach (var gamepad in GamepadList)
         {
-            // Instancie le prefab du joueur
-            GameObject player = Instantiate(PlayerPrefab);
-            PlayerScript playerScript = player.GetComponent<PlayerScript>();
-
+            var playerInput = PlayerInput.Instantiate(
+                PlayerPrefab,
+                controlScheme: "Gamepad",
+                pairWithDevice: gamepad,
+                splitScreenIndex: -1
+            );
+            
+            var playerScript = playerInput.GetComponent<PlayerScript>();
             if (playerScript != null)
             {
-                // Associe le gamepad au PlayerScript
                 playerScript.gamepad = gamepad;
                 GameManager.Instance.PlayerScriptList.Add(playerScript);
 
-                // Récupère le PlayerInput et son userId
-                var playerInput = player.GetComponent<UnityEngine.InputSystem.PlayerInput>();
-                int userId = playerInput != null ? (int)playerInput.user.id : -1;
-
-                // Ajoute au dictionnaire le PlayerScript et ses données associées
-                GameManager.Instance.PlayerScriptDictionary[playerScript] = new PlayerData(gamepad, userId);
-
-                // Log pour debug
-                //Debug.Log($"Ajout au dictionnaire : PlayerScript = {playerScript.name}, Gamepad = {gamepad.deviceId}, UserId = {userId}");
-
-                // Lie le contrôle au joueur
-                LinkPlayerToControl();
+                int playerIndex = playerInput.playerIndex; 
+                GameManager.Instance.PlayerScriptDictionary[playerScript] = new PlayerData(gamepad, playerIndex);
+                
+                playerInput.SwitchCurrentControlScheme(gamepad);
+                
+                Debug.Log($"Ajout au dictionnaire : PlayerScript = {playerScript.name}, Gamepad = {gamepad.deviceId}, PlayerIndex = {playerIndex}");
             }
+            Debug.Log(playerInput.actions);
         }
     }
 
-    public void LinkPlayerToControl()
-    {
-        foreach (var playerScript in GameManager.Instance.PlayerScriptList)
-        {
-            if (GameManager.Instance.PlayerScriptDictionary.TryGetValue(playerScript, out var playerData))
-            {
-                var playerInput = playerScript.GetComponent<PlayerInput>();
-                if (playerInput != null)
-                {
-                    playerInput.SwitchCurrentControlScheme(playerData.gamepad);
-                    Debug.Log($"PlayerInput de {playerScript.name} associé au Gamepad {playerData.gamepad.deviceId} et UserId {playerData.userId}");
-                }
-            }
-        }
-    }
-
-    public void testInputFromController()
+    public void CheckGamepadActions()
     {
         foreach (var kvp in GameManager.Instance.PlayerScriptDictionary)
         {
             var playerScript = kvp.Key;
-            var playerData = kvp.Value;
-            var gamepad = playerData.gamepad;
+            var playerInput = playerScript.GetComponent<PlayerInput>();
+            if (playerInput == null) continue;
 
-            if (gamepad == null) continue;
-
-            // Exemple pour quelques boutons courants
-            if (gamepad.buttonSouth.wasPressedThisFrame)
-                Debug.Log($"[{playerScript.name}] a pressé A (buttonSouth) sur Gamepad {gamepad.deviceId} (UserId {playerData.userId})");
-            if (gamepad.buttonNorth.wasPressedThisFrame)
-                Debug.Log($"[{playerScript.name}] a pressé Y (buttonNorth) sur Gamepad {gamepad.deviceId} (UserId {playerData.userId})");
-            if (gamepad.buttonWest.wasPressedThisFrame)
-                Debug.Log($"[{playerScript.name}] a pressé X (buttonWest) sur Gamepad {gamepad.deviceId} (UserId {playerData.userId})");
-            if (gamepad.buttonEast.wasPressedThisFrame)
-                Debug.Log($"[{playerScript.name}] a pressé B (buttonEast) sur Gamepad {gamepad.deviceId} (UserId {playerData.userId})");
-            if (gamepad.startButton.wasPressedThisFrame)
-                Debug.Log($"[{playerScript.name}] a pressé Start sur Gamepad {gamepad.deviceId} (UserId {playerData.userId})");
+            foreach (var action in playerInput.actions)
+            {
+                if (action == null) continue;
+                if (action.triggered)
+                {
+                    Debug.Log($"[{playerScript.name}] Action déclenchée : {action.name} (par Gamepad {kvp.Value.gamepad.deviceId})");
+                }
+            }
         }
     }
     

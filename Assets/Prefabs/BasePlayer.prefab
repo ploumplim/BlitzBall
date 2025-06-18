@@ -10013,6 +10013,7 @@ GameObject:
   - component: {fileID: 2418577391678432312}
   - component: {fileID: 2247482204993016630}
   - component: {fileID: 5093929637999399822}
+  - component: {fileID: 6150259333162000412}
   m_Layer: 0
   m_Name: BasePlayer
   m_TagString: Player
@@ -10100,7 +10101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 6bb5207dd87075e4485226855065b1f6, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -10113,7 +10114,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8743260033527591763}
+        m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2628e104-0248-4383-97c5-efbb175625b3
     m_ActionName: 'BasicMap/Move[/XInputControllerWindows/leftStick]'
   - m_PersistentCalls:
@@ -10125,7 +10138,7 @@ MonoBehaviour:
       - m_Target: {fileID: 8743260033527591763}
         m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
         m_MethodName: OnHit
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10157,7 +10170,7 @@ MonoBehaviour:
       - m_Target: {fileID: 8743260033527591763}
         m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
         m_MethodName: OnSprint
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10172,8 +10185,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8743260033527591763}
         m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
-        m_MethodName: OnReset
-        m_Mode: 0
+        m_MethodName: OnDebugReset
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10185,12 +10198,24 @@ MonoBehaviour:
     m_ActionId: faaf0d0d-defa-4837-abc7-38fffcd01262
     m_ActionName: 'BasicMap/DebugBallReset[/Keyboard/r]'
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 97e5ddc1-a1d4-4ab3-9619-bcb78de2a17a
-    m_ActionName: 'BasicMap/random[/Keyboard/w]'
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Gamepad & Keyboard
-  m_DefaultActionMap: BasicMap
+      m_Calls:
+      - m_Target: {fileID: 6150259333162000412}
+        m_TargetAssemblyTypeName: MoveTest, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 50bb9501-cad2-4b34-a179-585c94f53f3f
+    m_ActionName: 'Gameplay/Move[/XInputControllerWindows/leftStick,/XInputControllerWindows1/leftStick]'
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: Gamepad
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &8743260033527591763
@@ -10242,10 +10267,59 @@ MonoBehaviour:
   hitCooldown: 0.5
   hitRadius: 5
   hitAngle: 360
-  knockbackForce: 15
-  knockbackDuration: 0.5
+  hitForwardOffset: 0.5
   knockbackMassMult: 0.5
   knockbackLinearDampingMult: 0.2
+  fullKnockBackForce: 20
+  fullKnockBackDuration: 1.5
+  knockbackDurationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  knockbackForceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   inputBufferTime: 0.3
   moveVec2: {x: 0, y: 0}
   aimVec2: {x: 0, y: 0}
@@ -10331,6 +10405,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b95f766572df284798bcdd9ead82c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6150259333162000412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7898578888370541438}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d9363ebad3a8b44b9bf1c5ae31802b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
 --- !u!1001 &299666742507332586
 PrefabInstance:
   m_ObjectHideFlags: 0
