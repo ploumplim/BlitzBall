@@ -1395,11 +1395,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
       propertyPath: maximumLinearVelocity
-      value: 130
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 1169637238910938285, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
       propertyPath: softMaximumLinearVelocity
-      value: 60
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 1239983231244234824, guid: 9d2160ada6710bb409bdea57feae2116, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1489,7 +1489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: hitForce
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8743260033527591763, guid: 834081b385b537a408709ac3b2cd9902, type: 3}
       propertyPath: hitForwardOffset
