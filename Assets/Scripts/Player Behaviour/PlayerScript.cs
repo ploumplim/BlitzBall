@@ -53,8 +53,6 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public Vector2 aimVec2;
     
     
-    public Gamepad gamepad;
-    
     // private References
     private PlayerSM playerSM;
     private PlayerInput playerInput;

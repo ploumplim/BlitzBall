@@ -10013,7 +10013,6 @@ GameObject:
   - component: {fileID: 2418577391678432312}
   - component: {fileID: 2247482204993016630}
   - component: {fileID: 5093929637999399822}
-  - component: {fileID: 6150259333162000412}
   m_Layer: 0
   m_Name: BasePlayer
   m_TagString: Player
@@ -10212,7 +10211,7 @@ MonoBehaviour:
     m_ActionName: 'BasicMap/DebugBallReset[/Keyboard/r]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6150259333162000412}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MoveTest, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -10228,7 +10227,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Move[/XInputControllerWindows/leftStick,/XInputControllerWindows1/leftStick]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
-  m_DefaultActionMap: Gameplay
+  m_DefaultActionMap: BasicMap
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &8743260033527591763
@@ -10419,19 +10418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b95f766572df284798bcdd9ead82c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6150259333162000412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7898578888370541438}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61d9363ebad3a8b44b9bf1c5ae31802b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
 --- !u!1 &8135072768919942120
 GameObject:
   m_ObjectHideFlags: 0

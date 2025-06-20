@@ -31,7 +31,7 @@ public class MultiplayerManager : MonoBehaviour
 
     private void Update()
     {
-        CheckGamepadActions();
+        //CheckGamepadActions();
     }
 
     public void SpawnPlayersForGamepads()
@@ -50,7 +50,7 @@ public class MultiplayerManager : MonoBehaviour
             PlayerScript playerScript = playerInput.GetComponent<PlayerScript>();
             if (playerScript != null)
             {
-                playerScript.gamepad = gamepad;
+                // playerScript.gamepad = gamepad;
                 GameManager.Instance.PlayerScriptList.Add(playerScript);
 
                 int playerIndex = playerInput.playerIndex; 
@@ -63,23 +63,23 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 
-    public void CheckGamepadActions()
-    {
-        foreach (var kvp in GameManager.Instance.PlayerScriptDictionary)
-        {
-            var playerScript = kvp.Key;
-            var playerInput = playerScript.GetComponent<PlayerInput>();
-            if (playerInput == null) continue;
-
-            foreach (var action in playerInput.actions)
-            {
-                if (action == null) continue;
-                if (action.triggered)
-                {
-                    //Debug.Log($"[{playerScript.name}] Action déclenchée : {action.name} (par Gamepad {kvp.Value.gamepad.deviceId})");
-                }
-            }
-        }
-    }
+    // public void CheckGamepadActions()
+    // {
+    //     foreach (var kvp in GameManager.Instance.PlayerScriptDictionary)
+    //     {
+    //         var playerScript = kvp.Key;
+    //         var playerInput = playerScript.GetComponent<PlayerInput>();
+    //         if (playerInput == null) continue;
+    //
+    //         foreach (var action in playerInput.actions)
+    //         {
+    //             if (action == null) continue;
+    //             if (action.triggered)
+    //             {
+    //                 //Debug.Log($"[{playerScript.name}] Action déclenchée : {action.name} (par Gamepad {kvp.Value.gamepad.deviceId})");
+    //             }
+    //         }
+    //     }
+    // }
     
 }
