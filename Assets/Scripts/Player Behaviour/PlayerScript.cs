@@ -63,9 +63,9 @@ public class PlayerScript : MonoBehaviour
     private InputAction aimInput;
     private InputAction moveInput;
     private InputAction hitInput;
-    private InputAction specialInput;
     private InputAction sprintInput;
-    
+    private InputAction specialInput;
+
     private InputAction bufferedInput;
     
     // Method Variables
@@ -112,6 +112,29 @@ public class PlayerScript : MonoBehaviour
         currentHitCooldownTimer = 0f;
         
     }
+
+    public void ApplyPreset(CharacterPreset preset)
+    {
+        acceleration = preset.acceleration;
+        baseRotationSpeed = preset.baseRotationSpeed;
+        sprintMaxBoostSpeed = preset.sprintMaxBoostSpeed;
+        sprintSpeed = preset.sprintSpeed;
+        sprintBoostDecayTime = preset.sprintBoostDecayTime;
+        sprintCurve = preset.sprintCurve;
+        sprintBoostRecoveryRate = preset.sprintBoostRecoveryRate;
+        hitForce = preset.hitForce;
+        hitDuration = preset.hitDuration;
+        hitCooldown = preset.hitCooldown;
+        hitRadius = preset.hitRadius;
+        hitAngle = preset.hitAngle;
+        hitForwardOffset = preset.hitForwardOffset;
+        knockbackMassMult = preset.knockbackMassMult;
+        knockbackLinearDampingMult = preset.knockbackLinearDampingMult;
+        fullKnockBackForce = preset.fullKnockBackForce;
+        fullKnockBackDuration = preset.fullKnockBackDuration;
+        knockbackDurationCurve = preset.knockbackDurationCurve;
+        knockbackForceCurve = preset.knockbackForceCurve;
+    }
     
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -138,6 +161,26 @@ public class PlayerScript : MonoBehaviour
        
     }
 
+
+    public void OnNormalSpell(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            CharacterBaseCreation baseCreation = GetComponent<CharacterBaseCreation>();
+            baseCreation.spell01.DoSpell(transform);
+        }
+    }
+    
+    public void OnSpecialSpell(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            CharacterBaseCreation baseCreation = GetComponent<CharacterBaseCreation>();
+            baseCreation.spell02.DoSpell(transform);
+        }
+    }
+    
+    
     private void OnDisable()
     {
         inputActionAsset.FindActionMap("BasicMap").Disable(); // Disable the BasicMap action map

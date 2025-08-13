@@ -10013,6 +10013,7 @@ GameObject:
   - component: {fileID: 2418577391678432312}
   - component: {fileID: 2247482204993016630}
   - component: {fileID: 5093929637999399822}
+  - component: {fileID: 684989363814749795}
   m_Layer: 0
   m_Name: BasePlayer
   m_TagString: Player
@@ -10163,13 +10164,13 @@ MonoBehaviour:
     m_ActionName: 'BasicMap/Hit[/XInputControllerWindows/leftTrigger,/XInputControllerWindows/buttonWest]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 8743260033527591763}
+        m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
+        m_MethodName: OnSpecialSpell
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10211,9 +10212,9 @@ MonoBehaviour:
     m_ActionName: 'BasicMap/DebugBallReset[/Keyboard/r]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MoveTest, Assembly-CSharp
-        m_MethodName: OnMove
+      - m_Target: {fileID: 8743260033527591763}
+        m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
+        m_MethodName: OnNormalSpell
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10223,8 +10224,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 50bb9501-cad2-4b34-a179-585c94f53f3f
-    m_ActionName: 'Gameplay/Move[/XInputControllerWindows/leftStick,/XInputControllerWindows1/leftStick]'
+    m_ActionId: 9c36336a-36dd-4e38-8164-443557e552bf
+    m_ActionName: 'BasicMap/NormalSpell[/DualSenseGamepadHID1/buttonEast]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: BasicMap
@@ -10418,6 +10419,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b95f766572df284798bcdd9ead82c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &684989363814749795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7898578888370541438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4128150adbb2c6849a451b044be85a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heightType: 0
+  lightPreset: {fileID: 11400000, guid: 462f1142fba4b4047a62a279b00580ed, type: 2}
+  mediumPreset: {fileID: 11400000, guid: 924b1601d6f0c4a46bc819cdd97c9955, type: 2}
+  bigPreset: {fileID: 11400000, guid: 9b179878efe48f149a2e34a7a0731124, type: 2}
+  spell01: {fileID: 11400000, guid: d94710ba8a4ed0d448ca8a438318282a, type: 2}
+  spell02: {fileID: 11400000, guid: d94710ba8a4ed0d448ca8a438318282a, type: 2}
 --- !u!1 &8135072768919942120
 GameObject:
   m_ObjectHideFlags: 0

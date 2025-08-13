@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Special",
-                    "type": "Button",
-                    "id": "607861af-804f-44e1-af14-232ab657d97f",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Sprint",
                     "type": "Button",
                     "id": "57f35ee1-e621-434d-9503-d49570912a76",
@@ -54,6 +45,24 @@
                     "name": "DebugReset",
                     "type": "Button",
                     "id": "faaf0d0d-defa-4837-abc7-38fffcd01262",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NormalSpell",
+                    "type": "Button",
+                    "id": "9c36336a-36dd-4e38-8164-443557e552bf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpecialSpell",
+                    "type": "Button",
+                    "id": "607861af-804f-44e1-af14-232ab657d97f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -107,28 +116,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8cab22a3-4085-4c24-9dc0-ec631bd1609a",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad;Gamepad & Keyboard",
-                    "action": "Special",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b3862574-72c8-4b07-8c1d-543e754bee66",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad;Gamepad & Keyboard",
-                    "action": "Special",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4cf2f6da-aa73-4dfb-92be-6fcc8669cee5",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
@@ -157,6 +144,28 @@
                     "processors": "",
                     "groups": ";Gamepad;Gamepad & Keyboard",
                     "action": "DebugReset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2377ec1a-8826-44ce-809e-7eb09e11744d",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NormalSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff85e405-ac22-425b-a271-284c218c4de0",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialSpell",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
