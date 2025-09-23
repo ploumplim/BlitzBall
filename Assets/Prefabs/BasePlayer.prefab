@@ -10435,8 +10435,8 @@ MonoBehaviour:
   lightPreset: {fileID: 11400000, guid: 462f1142fba4b4047a62a279b00580ed, type: 2}
   mediumPreset: {fileID: 11400000, guid: 924b1601d6f0c4a46bc819cdd97c9955, type: 2}
   bigPreset: {fileID: 11400000, guid: 9b179878efe48f149a2e34a7a0731124, type: 2}
-  spell01: {fileID: 11400000, guid: d94710ba8a4ed0d448ca8a438318282a, type: 2}
-  spell02: {fileID: 11400000, guid: d94710ba8a4ed0d448ca8a438318282a, type: 2}
+  spell01: {fileID: 11400000, guid: e5faeaeed6a498049a839ce16e89fe2b, type: 2}
+  spell02: {fileID: 11400000, guid: e5faeaeed6a498049a839ce16e89fe2b, type: 2}
 --- !u!1 &8135072768919942120
 GameObject:
   m_ObjectHideFlags: 0

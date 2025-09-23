@@ -83,3 +83,7 @@ crashlytics-build.properties
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+.idea/.idea.Blitzball/.idea/copilot.data.migration.edit.xml
+.idea/.idea.Blitzball/.idea/copilot.data.migration.ask2agent.xml
+.idea/.idea.Blitzball/.idea/copilot.data.migration.ask.xml
+.idea/.idea.Blitzball/.idea/copilot.data.migration.agent.xml

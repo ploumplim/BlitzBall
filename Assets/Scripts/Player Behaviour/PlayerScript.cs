@@ -79,6 +79,9 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public float currentSprintBoost; // Current sprint boost value
     [HideInInspector] public GameObject lastCollidedBall; // Last ball collided with, used for hit calculations
     
+    float lastSpellCastTime = 0f;
+
+    
     
     // Events
     public UnityEvent onHitPressed;
@@ -164,19 +167,33 @@ public class PlayerScript : MonoBehaviour
 
     public void OnNormalSpell(InputAction.CallbackContext context)
     {
+        CharacterBaseCreation baseCreation = GetComponent<CharacterBaseCreation>();
+        float spellCooldown = baseCreation.spell02.spellCooldown;
+        
         if (context.phase == InputActionPhase.Performed)
         {
-            CharacterBaseCreation baseCreation = GetComponent<CharacterBaseCreation>();
-            baseCreation.spell01.DoSpell(transform);
+            if (Time.time >= lastSpellCastTime + spellCooldown)
+            {
+                baseCreation.spell01.DoSpell(transform);
+                lastSpellCastTime = Time.time;
+                
+            }
         }
     }
     
     public void OnSpecialSpell(InputAction.CallbackContext context)
     {
+        
+        CharacterBaseCreation baseCreation = GetComponent<CharacterBaseCreation>();
+        float spellCooldown = baseCreation.spell02.spellCooldown;
+        
         if (context.phase == InputActionPhase.Performed)
         {
-            CharacterBaseCreation baseCreation = GetComponent<CharacterBaseCreation>();
-            baseCreation.spell02.DoSpell(transform);
+            if (Time.time >= lastSpellCastTime + spellCooldown)
+            {
+                baseCreation.spell02.DoSpell(transform);
+                lastSpellCastTime = Time.time;
+            }
         }
     }
     
