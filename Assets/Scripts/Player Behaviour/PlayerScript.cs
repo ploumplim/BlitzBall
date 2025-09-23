@@ -79,7 +79,9 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public float currentSprintBoost; // Current sprint boost value
     [HideInInspector] public GameObject lastCollidedBall; // Last ball collided with, used for hit calculations
     
+    // Variable for Spell
     float lastSpellCastTime = 0f;
+    private bool isSpellHeld = false;
 
     
     
@@ -92,6 +94,51 @@ public class PlayerScript : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+    }
+    
+    private void Update()
+    {
+
+        // Hit timer
+        if (currentHitCooldownTimer < hitCooldown)
+        {
+            currentHitCooldownTimer += Time.deltaTime;
+        }
+        
+        // Sprintboost recovery
+        if (currentSprintBoost < sprintMaxBoostSpeed)
+        {
+            currentSprintBoost += sprintBoostRecoveryRate * Time.deltaTime;
+        }
+
+        // Input Buffering
+        if (bufferedInput != null)
+        {
+            inputBufferTimer += Time.deltaTime;
+
+            // Execute buffered input if in Neutral State
+            if (playerSM.currentState == playerSM.states[0]) 
+            {
+                ExecuteBufferedInput();
+            }
+
+            // Clear buffer if timer exceeds limit
+            if (inputBufferTimer >= inputBufferTime)
+            {
+                ClearBuffer();
+            }
+        }
+        
+        if (isSpellHeld)
+        {
+            Debug.Log("La touche du sort est maintenue (Performed non annulé)");
+        }
+        
+        // If the input is released while sprinting, change to Neutral State
+        if (sprintInput.WasReleasedThisFrame() && playerSM.currentState == playerSM.states[4])
+        {
+            playerSM.ChangeState(playerSM.states[0]); // Change to Neutral State
+        }
     }
     
     private void Start()
@@ -115,6 +162,8 @@ public class PlayerScript : MonoBehaviour
         currentHitCooldownTimer = 0f;
         
     }
+
+    
 
     public void ApplyPreset(CharacterPreset preset)
     {
@@ -168,14 +217,27 @@ public class PlayerScript : MonoBehaviour
     public void OnNormalSpell(InputAction.CallbackContext context)
     {
         CharacterBaseCreation baseCreation = GetComponent<CharacterBaseCreation>();
-        float spellCooldown = baseCreation.spell02.spellCooldown;
+        float spellCooldown = baseCreation.spell01.spellCooldown;
         
-        if (context.phase == InputActionPhase.Performed)
+        Spell normalSpell = baseCreation.spell01;
+        if (normalSpell is WallSpell)
         {
-            if (Time.time >= lastSpellCastTime + spellCooldown)
+            if (context.phase == InputActionPhase.Performed) // Appel du Hold
             {
+                Debug.Log("Test : Touche du sort maintenue");
+                isSpellHeld = true;
+                if (Time.time >= lastSpellCastTime + spellCooldown)
+                {
+                    //TODO : Rajoutez fonction de preview de mur
+                    lastSpellCastTime = Time.time;
+                
+                }
+            }
+
+            if (context.phase == InputActionPhase.Disabled)
+            {
+                isSpellHeld = false; 
                 baseCreation.spell01.DoSpell(transform);
-                lastSpellCastTime = Time.time;
                 
             }
         }
@@ -187,12 +249,26 @@ public class PlayerScript : MonoBehaviour
         CharacterBaseCreation baseCreation = GetComponent<CharacterBaseCreation>();
         float spellCooldown = baseCreation.spell02.spellCooldown;
         
-        if (context.phase == InputActionPhase.Performed)
+        Spell normalSpell = baseCreation.spell02;
+        if (normalSpell is WallSpell)
         {
-            if (Time.time >= lastSpellCastTime + spellCooldown)
+            if (context.phase == InputActionPhase.Performed) // Appel du Hold
             {
+                Debug.Log("Test : Touche du sort maintenue");
+                isSpellHeld = true;
+                if (Time.time >= lastSpellCastTime + spellCooldown)
+                {
+                    //TODO : Rajoutez fonction de preview de mur
+                    lastSpellCastTime = Time.time;
+                
+                }
+            }
+
+            if (context.phase == InputActionPhase.Canceled)
+            {
+                isSpellHeld = false; 
                 baseCreation.spell02.DoSpell(transform);
-                lastSpellCastTime = Time.time;
+                
             }
         }
     }
@@ -204,45 +280,7 @@ public class PlayerScript : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-
-        // Hit timer
-        if (currentHitCooldownTimer < hitCooldown)
-        {
-            currentHitCooldownTimer += Time.deltaTime;
-        }
-        
-        // Sprintboost recovery
-        if (currentSprintBoost < sprintMaxBoostSpeed)
-        {
-            currentSprintBoost += sprintBoostRecoveryRate * Time.deltaTime;
-        }
-
-        // Input Buffering
-        if (bufferedInput != null)
-        {
-            inputBufferTimer += Time.deltaTime;
-
-            // Execute buffered input if in Neutral State
-            if (playerSM.currentState == playerSM.states[0]) 
-            {
-                ExecuteBufferedInput();
-            }
-
-            // Clear buffer if timer exceeds limit
-            if (inputBufferTimer >= inputBufferTime)
-            {
-                ClearBuffer();
-            }
-        }
-        
-        // If the input is released while sprinting, change to Neutral State
-        if (sprintInput.WasReleasedThisFrame() && playerSM.currentState == playerSM.states[4])
-        {
-            playerSM.ChangeState(playerSM.states[0]); // Change to Neutral State
-        }
-    }
+    
 
     private void OnCollisionEnter(Collision other)
     {
