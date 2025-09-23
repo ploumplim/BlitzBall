@@ -83,6 +83,7 @@ public class PlayerScript : MonoBehaviour
     CharacterBaseCreation baseCreation;
     float lastSpellCastTime = 0f;
     private bool isSpellHeld = false;
+    private bool spellWasOnCooldown = false;
 
     
     
@@ -135,6 +136,12 @@ public class PlayerScript : MonoBehaviour
             baseCreation.spell01.DoPreviewSpell(transform);
             //Debug.Log("La touche du sort est maintenue (Performed non annulé)");
         }
+        float spellCooldown = baseCreation?.spell01?.spellCooldown ?? 0f;
+        if (spellWasOnCooldown && Time.time >= lastSpellCastTime + spellCooldown)
+        {
+            Debug.Log("Le sort est à nouveau utilisable !");
+            spellWasOnCooldown = false;
+        }
         
         // If the input is released while sprinting, change to Neutral State
         if (sprintInput.WasReleasedThisFrame() && playerSM.currentState == playerSM.states[4])
@@ -163,6 +170,16 @@ public class PlayerScript : MonoBehaviour
         // Timers
         currentHitCooldownTimer = 0f;
         
+        // Initialisation pour rendre le sort utilisable immédiatement
+        baseCreation = GetComponent<CharacterBaseCreation>();
+        if (baseCreation != null && baseCreation.spell01 != null)
+        {
+            lastSpellCastTime = -baseCreation.spell01.spellCooldown;
+        }
+        else
+        {
+            lastSpellCastTime = -5f; // Valeur par défaut si le cooldown n'est pas encore accessible
+        }
     }
 
     
@@ -227,21 +244,29 @@ public class PlayerScript : MonoBehaviour
         {
             if (context.phase == InputActionPhase.Performed) // Appel du Hold
             {
-                isSpellHeld = true;
+                
                 if (Time.time >= lastSpellCastTime + spellCooldown)
                 {
+                    isSpellHeld = true;
+                    baseCreation.spell01.DoPreviewSpell(transform);
                    
                     lastSpellCastTime = Time.time;
-                
+                    spellWasOnCooldown = true; // Ajoute cette ligne
+
                 }
             }
 
-            if (context.phase == InputActionPhase.Canceled)
+            if (isSpellHeld)
             {
-                isSpellHeld = false; 
-                baseCreation.spell01.DoSpell(transform);
+                if (context.phase == InputActionPhase.Canceled)
+                {
+                    isSpellHeld = false;
                 
+                    baseCreation.spell01.DoSpell(transform);
+                
+                }
             }
+            
         }
     }
     
