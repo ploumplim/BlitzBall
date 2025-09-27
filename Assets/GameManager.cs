@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public List<PlayerScript> PlayerScriptList;
     public Dictionary<PlayerScript, PlayerData> PlayerScriptDictionary = new Dictionary<PlayerScript, PlayerData>();
-    
+    public BallScript Ball;
     
     void Awake()
     {

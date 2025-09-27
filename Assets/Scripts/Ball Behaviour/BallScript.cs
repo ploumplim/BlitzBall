@@ -34,6 +34,7 @@ public class BallScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         ballSM = GetComponent<BallSM>();
+        GameManager.Instance.Ball = this;
     }
 
     private void FixedUpdate()

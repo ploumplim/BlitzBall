@@ -268,6 +268,15 @@ public class PlayerScript : MonoBehaviour
             }
             
         }
+
+        if (normalSpell is BallTelekinesisSpell)
+        {
+            if (context.phase == InputActionPhase.Performed) // Appel du Hold
+            {
+                Debug.Log("DoSpell");
+                baseCreation.spell01.DoSpell(transform);
+            }
+        }
     }
     
     public void OnSpecialSpell(InputAction.CallbackContext context)
