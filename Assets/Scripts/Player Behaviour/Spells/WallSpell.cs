@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Blitz Balls/Wall Spell", fileName = "Wall Spell")]
+[CreateAssetMenu(menuName = "Spell/Wall Spell", fileName = "Wall Spell")]
 public class WallSpell : Spell
 {
     public GameObject wallPrefab;
@@ -9,6 +9,8 @@ public class WallSpell : Spell
     public float timeToDestroyWall;
     public GameObject previewWallPrefabInstance;
     public float wallSpawnDistanceToPlayer;
+    
+    public float wallBouncyness;
     
     
     public override void DoSpell(Transform player)
